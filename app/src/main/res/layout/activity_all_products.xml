@@ -6,7 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AllProducts"
-    android:id="@+id/drawer">
+    android:id="@+id/drawer"
+    tools:openDrawer="start">
+  
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      android:background="@color/theme"
+      android:id="@+id/toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      android:layout_below="@+id/toolbar"
+        android:id="@+id/container"
+      />
+    
+  </RelativeLayout>
+
+  <com.google.android.material.navigation.NavigationView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:headerLayout="@layout/navigation_header_layout"
+      app:menu="@menu/navigation_menu"
+    android:layout_gravity="start"
+    android:id="@+id/navigation_view"/>
 
 
   </androidx.drawerlayout.widget.DrawerLayout>
