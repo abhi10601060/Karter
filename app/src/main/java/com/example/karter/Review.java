@@ -1,0 +1,57 @@
+package com.example.karter;
+
+public class Review {
+    private int itemId;
+    private String name;
+    private String text;
+    private  String date;
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "itemId=" + itemId +
+                ", name='" + name + '\'' +
+                ", text='" + text + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Review(int itemId, String name, String text, String date) {
+        this.itemId = itemId;
+        this.name = name;
+        this.text = text;
+        this.date = date;
+    }
+}
