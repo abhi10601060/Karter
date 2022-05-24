@@ -39,7 +39,8 @@
                     app:layout_constraintHorizontal_bias="0.494"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline2"
@@ -102,7 +103,7 @@
                 android:id="@+id/Categories_RV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp" />
 
             <TextView
@@ -119,7 +120,7 @@
                 android:id="@+id/Popular_RV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp" />
 
             <TextView
@@ -136,7 +137,7 @@
                 android:id="@+id/New_RV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp" />
 
 

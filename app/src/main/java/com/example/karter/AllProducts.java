@@ -68,6 +68,8 @@ public class AllProducts extends AppCompatActivity {
         transaction.commit();
 
 
+
+
     }
 
     private  void  initViews(){

@@ -3,15 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_about.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_cart.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat1_background.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat2_background.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat3_background.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat4_background.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat5_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/custom_search_bar.xml" value="0.1515" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.1515" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/orange_banner.xml" value="0.1515" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_all_products.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/category_item_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/fragment_all_products.xml" value="0.2324074074074074" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/navigation_header_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/menu/navigation_menu.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.121" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.121" />
       </map>
     </option>
   </component>
