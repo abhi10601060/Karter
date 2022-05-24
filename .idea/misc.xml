@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_about.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_cart.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/add_btn.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat1_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat2_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat3_background.xml" value="0.166" />
@@ -16,7 +17,8 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_all_products.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/category_item_layout.xml" value="0.25" />
-        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/fragment_all_products.xml" value="0.2324074074074074" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/fragment_all_products.xml" value="0.24615384615384617" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/lgrocery_item_layout.xml" value="1.2" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/navigation_header_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/menu/navigation_menu.xml" value="0.25" />
