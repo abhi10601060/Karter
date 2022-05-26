@@ -1,5 +1,6 @@
 package com.example.karter;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class FragmentAllProducts extends Fragment {
 
@@ -61,10 +64,19 @@ public class FragmentAllProducts extends Fragment {
     }
     private void handleNewItems(){
 
-        // TODO: 24-05-2022 sort according to id
+        Comparator<GroceryItem> comparator = new Comparator<GroceryItem>() {
+            @Override
+            public int compare(GroceryItem t1, GroceryItem t2) {
+                return t2.getId()-t1.getId();
+            }
+        };
+
+        ArrayList<GroceryItem> list = Utils.getAllItems(getActivity());
+
+        Collections.sort(list,comparator);
 
         GroceryItemAdapter adapter = new GroceryItemAdapter(getActivity());
-        adapter.setGroceryItems(Utils.getAllItems(getActivity()));
+        adapter.setGroceryItems(list);
         new_items_Rv.setAdapter(adapter);
         new_items_Rv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 

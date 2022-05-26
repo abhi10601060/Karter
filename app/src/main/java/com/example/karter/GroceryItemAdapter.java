@@ -1,10 +1,14 @@
 package com.example.karter;
 
+import static com.example.karter.DetailsActivity.GROCERY_ITEM_KEY;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +50,15 @@ public class GroceryItemAdapter extends RecyclerView.Adapter<GroceryItemAdapter.
                 .load(groceryItems.get(position).getImageUrl())
                 .into(holder.itemImage);
 
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context , DetailsActivity.class);
+                intent.putExtra(GROCERY_ITEM_KEY,groceryItems.get(holder.getAdapterPosition()));
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -55,6 +68,7 @@ public class GroceryItemAdapter extends RecyclerView.Adapter<GroceryItemAdapter.
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder{
+        private RelativeLayout parent;
         private TextView itemName;
         private ImageView itemImage;
         private TextView price;
@@ -63,6 +77,7 @@ public class GroceryItemAdapter extends RecyclerView.Adapter<GroceryItemAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            parent = itemView.findViewById(R.id.parent_Rl);
             itemName= itemView.findViewById(R.id.grocery_item_name_txt);
             itemImage = itemView.findViewById(R.id.grocery_item_image);
             price = itemView.findViewById(R.id.price);
