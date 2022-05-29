@@ -107,4 +107,17 @@ public class Utils {
         }
     }
 
+    public static ArrayList<Review> getReviews(Context context , int itemId){
+
+        ArrayList<GroceryItem> allItems = getAllItems(context);
+
+        for (GroceryItem i : allItems){
+            if(itemId==i.getId()){
+                ArrayList<Review> reviews = i.getReviews();
+                return reviews;
+            }
+        }
+        return null;
+    }
+
 }

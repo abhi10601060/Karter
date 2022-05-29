@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.util.ArrayList;
+
 public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview {
 
     private MaterialToolbar toolbar ;
@@ -198,6 +200,8 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
     public void onAddReviewResult(Review review) {
 
         Utils.addReview(this,review,incomingItem.getId());
+        ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
+
 
 
     }
