@@ -62,4 +62,49 @@ public class Utils {
         return  Id;
     }
 
+    public static void changeRate(Context context , int Id , int newRate){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        ArrayList<GroceryItem> allItems = gson.fromJson(sharedPreferences.getString(ALL_ITEMS,null),groceryType);
+
+        if(allItems!= null){
+            ArrayList<GroceryItem> newItems = new ArrayList<>();
+            for (GroceryItem i : allItems){
+                if (i.getId()==Id){
+                    i.setRate(newRate);
+                    newItems.add(i);
+                }
+                else {
+                    newItems.add(i);
+                }
+            }
+            editor.remove(ALL_ITEMS);
+            editor.putString(ALL_ITEMS,gson.toJson(newItems));
+            editor.commit();
+        }
+
+    }
+
+    public static void  addReview(Context context , Review review , int itemId){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+        ArrayList<GroceryItem> allItems = getAllItems(context);
+
+        if (allItems!=null){
+
+            ArrayList<GroceryItem> newItems = new ArrayList<>();
+            for(GroceryItem i : allItems){
+                if (i.getId()==itemId){
+                    ArrayList<Review> reviews = i.getReviews();
+                    reviews.add(review);
+                    i.setReviews(reviews);
+                }
+                newItems.add(i);
+            }
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove(ALL_ITEMS);
+            editor.putString(ALL_ITEMS,gson.toJson(newItems));
+            editor.commit();
+        }
+    }
+
 }

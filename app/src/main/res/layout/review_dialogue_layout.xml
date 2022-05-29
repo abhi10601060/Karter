@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:elevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/theme"
+        android:id="@+id/review_dialogue_header">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Yor Review"
+            android:layout_centerHorizontal="true"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/review_dialogue_header"
+        android:background="@color/background_theme">
+
+        <EditText
+            android:id="@+id/review_dialogue_edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:hint="Your Name Here..."
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/review_dialogue_edt_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/review_dialogue_edt_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Your Review..."
+            android:inputType="textMultiLine"
+            android:lines="5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WARNING"
+            android:layout_below="@+id/review_dialogue_edt_review"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textColor="@color/theme"
+            android:visibility="visible"
+            android:id="@+id/review_dialogue_txt_warning"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/review_dialogue_txt_warning"
+            android:layout_centerHorizontal="true"
+            android:text="add"
+            android:id="@+id/review_dialogue_btn_add"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

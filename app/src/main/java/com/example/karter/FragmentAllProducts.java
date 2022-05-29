@@ -28,19 +28,34 @@ public class FragmentAllProducts extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_products,container,false);
 
-        category_RV = view.findViewById(R.id.Categories_RV);
-        popular_RV=view.findViewById(R.id.Popular_RV);
-        new_items_Rv=view.findViewById(R.id.New_RV);
+        initViews(view);
 
-        initViews();
+        initRecViews();
+
         handleCategories();
-        handlePopular();
+
         handleNewItems();
 
         return view;
     }
-    private  void  initViews(){
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initRecViews();
+    }
+
+    private  void  initViews(View view){
+
+        category_RV = view.findViewById(R.id.Categories_RV);
+        popular_RV=view.findViewById(R.id.Popular_RV);
+        new_items_Rv=view.findViewById(R.id.New_RV);
+
+
+    }
+    private  void  initRecViews(){
+        handleNewItems();
+        handlePopular();
     }
     private void handleCategories(){
         ArrayList<CategoryItem> categoryItems = new ArrayList<>();
@@ -55,6 +70,7 @@ public class FragmentAllProducts extends Fragment {
         category_RV.setAdapter(adapter);
         category_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
     }
+
     private void handlePopular(){
 
         GroceryItemAdapter adapter = new GroceryItemAdapter(getActivity());
@@ -62,6 +78,7 @@ public class FragmentAllProducts extends Fragment {
         popular_RV.setAdapter(adapter);
         popular_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
     }
+
     private void handleNewItems(){
 
         Comparator<GroceryItem> comparator = new Comparator<GroceryItem>() {
