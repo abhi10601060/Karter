@@ -119,5 +119,28 @@ public class Utils {
         }
         return null;
     }
+    public  static  void removeReview(Context context , int itemId , Review review){
+        ArrayList<GroceryItem> allItems = getAllItems(context);
+        ArrayList<GroceryItem> newItems=new ArrayList<>();
+        for (GroceryItem i : allItems){
+            if (itemId==i.getId()){
+                ArrayList<Review> reviews = i.getReviews();
+                ArrayList<Review> newReview = new ArrayList<>();
+                for (Review r : reviews){
+                    if (!r.equals(review)){
+                        newReview.add(r);
+                    }
+                }
+                i.setReviews(newReview);
+            }
+            newItems.add(i);
+        }
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(ALL_ITEMS);
+        editor.putString(ALL_ITEMS, gson.toJson(newItems));
+        editor.commit();
+
+    }
 
 }

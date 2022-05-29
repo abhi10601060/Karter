@@ -46,19 +46,22 @@ public class ReviewDialogue extends DialogFragment {
             GroceryItem item = bundle.getParcelable(GROCERY_ITEM_KEY);
 
             if(item!= null){
-                String name = String.valueOf(review_name.getText());
-                String review = review_text.getText().toString();
+
 
                 btn_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (name=="" || review==""){
+                        String name = review_name.getText().toString();
+                        String review = review_text.getText().toString();
+
+                        if (name.equals("") || review.equals("")){
                             warning.setText("Fill All Blanks!!!");
                             warning.setVisibility(View.VISIBLE);
                         }
                         else {
                             warning.setVisibility(View.GONE);
                             String date = getCurDate();
+
 
                             Review review1 = new Review(item.getId(),name,review,date);
                             try {

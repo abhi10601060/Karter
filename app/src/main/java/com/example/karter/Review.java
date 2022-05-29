@@ -1,5 +1,7 @@
 package com.example.karter;
 
+import androidx.annotation.Nullable;
+
 public class Review {
     private int itemId;
     private String name;
@@ -53,5 +55,13 @@ public class Review {
         this.name = name;
         this.text = text;
         this.date = date;
+    }
+
+
+    public boolean equals(Review r) {
+        if (this.name.equals(r.getName()) && this.text.equals(r.getText()) && this.date.equals(r.getDate())){
+            return true;
+        }
+        return false;
     }
 }

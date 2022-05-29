@@ -1,6 +1,7 @@
 package com.example.karter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -9,13 +10,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 
-public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview {
+public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview , ReviewAdapter.RemoveReview {
 
     private MaterialToolbar toolbar ;
     public static final String GROCERY_ITEM_KEY = "incoming_item";
@@ -24,6 +26,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
     private ImageView image , plus,minus, rating1 , rating2, rating3;
     private RelativeLayout add_to_cart, first_star,second_star , third_star ;
     private RecyclerView review_RV;
+    private ReviewAdapter reviewAdapter = new ReviewAdapter(this);
 
     private int amount = 1;
 
@@ -188,10 +191,19 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
     private void handleReview(){
 
+
+        review_RV.setAdapter(reviewAdapter);
+        reviewAdapter.setAllReviews(Utils.getReviews(this,incomingItem.getId()));
+        review_RV.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
         add_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ReviewDialogue dialogue = new ReviewDialogue();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(GROCERY_ITEM_KEY,incomingItem);
+                dialogue.setArguments(bundle);
+                dialogue.show(getSupportFragmentManager(),"add_review");
             }
         });
     }
@@ -201,6 +213,28 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
         Utils.addReview(this,review,incomingItem.getId());
         ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
+
+        if (newReviews!= null){
+            reviewAdapter.setAllReviews(newReviews);
+            Toast.makeText(this, "Review added successfully", Toast.LENGTH_SHORT).show();
+        }
+
+
+//        review_RV.setAdapter(reviewAdapter);
+//        review_RV.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+
+    }
+
+    @Override
+    public void onRemoveResult(Review review) {
+        Utils.removeReview(this,incomingItem.getId(),review);
+        ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
+
+        if (newReviews!=null){
+            reviewAdapter.setAllReviews(newReviews);
+            Toast.makeText(this, "Review removed successfully", Toast.LENGTH_SHORT).show();
+        }
 
 
 
