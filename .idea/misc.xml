@@ -19,10 +19,12 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/orange_banner.xml" value="0.1515" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/quantity_amount_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/review_background.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/search_btn_backgroud.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/total_price_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_all_products.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_details.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_search.xml" value="0.24615384615384617" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/category_item_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/details_grocery_item_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/fragment_all_products.xml" value="0.24615384615384617" />

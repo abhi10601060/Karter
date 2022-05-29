@@ -9,6 +9,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.security.KeyRep;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Utils {
     private static final String DB_NAME = "fake_database";
@@ -140,6 +143,32 @@ public class Utils {
         editor.remove(ALL_ITEMS);
         editor.putString(ALL_ITEMS, gson.toJson(newItems));
         editor.commit();
+
+    }
+    public static ArrayList<GroceryItem> searchByName(Context context , String name){
+        ArrayList<GroceryItem> allItems = getAllItems(context);
+        if (allItems!= null){
+            Set<GroceryItem> items = new HashSet<>();
+            for (GroceryItem i : allItems){
+                if (i.getName().equalsIgnoreCase(name)){
+                    items.add(i);
+                }
+
+                String[] names = i.getName().split(" ");
+                for (String s : names){
+                    if (s.equalsIgnoreCase(name)){
+                        items.add(i);
+                    }
+                }
+            }
+            ArrayList<GroceryItem> result = new ArrayList<>();
+            for (GroceryItem g : items){
+                result.add(g);
+            }
+            return result;
+        }
+        return null;
+
 
     }
 

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class AllProducts extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class AllProducts extends AppCompatActivity {
     private DrawerLayout drawer ;
     private MaterialToolbar toolbar;
     private NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

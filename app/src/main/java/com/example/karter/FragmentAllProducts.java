@@ -1,8 +1,10 @@
 package com.example.karter;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +27,7 @@ public class FragmentAllProducts extends Fragment {
     private RecyclerView category_RV;
     private  RecyclerView popular_RV;
     private RecyclerView new_items_Rv;
+    private BottomNavigationView bottomNavigationView;
 
 
     @Nullable
@@ -36,6 +43,8 @@ public class FragmentAllProducts extends Fragment {
 
         handleNewItems();
 
+        handleBottomNavigation();
+
         return view;
     }
 
@@ -50,6 +59,8 @@ public class FragmentAllProducts extends Fragment {
         category_RV = view.findViewById(R.id.Categories_RV);
         popular_RV=view.findViewById(R.id.Popular_RV);
         new_items_Rv=view.findViewById(R.id.New_RV);
+
+        bottomNavigationView=view.findViewById(R.id.btm_navigation_bar);
 
 
     }
@@ -97,5 +108,30 @@ public class FragmentAllProducts extends Fragment {
         new_items_Rv.setAdapter(adapter);
         new_items_Rv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
+    }
+    private void handleBottomNavigation(){
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.btm_cart:
+                        // TODO: 29-05-2022 go to cart activity
+                        break;
+                    case R.id.btm_search:
+                        // TODO: 29-05-2022 go to search activity
+                        Intent intent = new Intent(getActivity(),SearchActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        break;
+                    case R.id.btm_home:
+                        // TODO: 29-05-2022 go to home activity
+                        break;
+
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 }
