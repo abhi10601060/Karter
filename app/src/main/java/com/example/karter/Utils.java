@@ -172,4 +172,15 @@ public class Utils {
 
     }
 
+    public static  ArrayList<String> getAllCategories(){
+        ArrayList<String> categoryItems = new ArrayList<>();
+        categoryItems.add("Healthy");
+        categoryItems.add("Pizza");
+        categoryItems.add("Beverages");
+        categoryItems.add("Fruits");
+        categoryItems.add("Cleansers");
+
+        return categoryItems;
+    }
+
 }

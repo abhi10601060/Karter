@@ -17,10 +17,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-    private ArrayList<CategoryItem> allCategories;
+    private ArrayList<String> allCategories;
     private Context context ;
 
-    public void setAllCategories(ArrayList<CategoryItem> allCategories) {
+    public void setAllCategories(ArrayList<String> allCategories) {
         this.allCategories = allCategories;
     }
 
@@ -38,7 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.category_name.setText(allCategories.get(position).getName());
+        holder.category_name.setText(allCategories.get(position));
         switch (position){
             case 0 :
                 holder.mainLayout.setBackground(context.getDrawable(R.drawable.cat1_background));

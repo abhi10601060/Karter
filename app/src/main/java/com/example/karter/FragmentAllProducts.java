@@ -69,15 +69,10 @@ public class FragmentAllProducts extends Fragment {
         handlePopular();
     }
     private void handleCategories(){
-        ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-        categoryItems.add(new CategoryItem("Healthy"));
-        categoryItems.add(new CategoryItem("Pizza"));
-        categoryItems.add(new CategoryItem("Beverages"));
-        categoryItems.add(new CategoryItem("Fruits"));
-        categoryItems.add(new CategoryItem("Cleansers"));
 
+        ArrayList<String> allCategories=Utils.getAllCategories();
         CategoryAdapter adapter = new CategoryAdapter(getActivity());
-        adapter.setAllCategories(categoryItems);
+        adapter.setAllCategories(allCategories);
         category_RV.setAdapter(adapter);
         category_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
     }
