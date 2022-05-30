@@ -2,6 +2,7 @@ package com.example.karter;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.category_name.setText(allCategories.get(position));
+
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,SearchActivity.class);
+                intent.putExtra("category",allCategories.get(holder.getAdapterPosition()));
+                context.startActivity(intent);
+            }
+        });
+
+
+
         switch (position){
             case 0 :
                 holder.mainLayout.setBackground(context.getDrawable(R.drawable.cat1_background));

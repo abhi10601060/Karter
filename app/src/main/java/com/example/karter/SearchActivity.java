@@ -1,5 +1,7 @@
 package com.example.karter;
 
+import static com.example.karter.CategoryDialogue.CALLING_ACTIVITY;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,7 +23,8 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity  implements CategoryDialogue.CategorySelected {
+
 
     private TextView first_category , second_category , third_category , all_category;
     private EditText search_bar;
@@ -39,7 +42,29 @@ public class SearchActivity extends AppCompatActivity {
         handleBottomNavigation();
 
 
-
+        all_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CategoryDialogue dialogue= new CategoryDialogue();
+                Bundle bundle=new Bundle();
+                bundle.putString(CALLING_ACTIVITY,"search_activity");
+                dialogue.setArguments(bundle);
+                dialogue.show(getSupportFragmentManager(),"select_category");
+            }
+        });
+        Intent intent = getIntent();
+        if (intent!= null){
+            String incoming_category = intent.getStringExtra("category");
+            if (incoming_category!=null){
+                ArrayList<GroceryItem> items_of_category = Utils.getItemsByCategories(this,incoming_category);
+                if (items_of_category!= null){
+                    adapter = new GroceryItemAdapter(this);
+                    adapter.setGroceryItems(items_of_category);
+                    search_result.setAdapter(adapter);
+                    search_result.setLayoutManager(new GridLayoutManager(this,2));
+                }
+            }
+        }
 
 
         search_icon.setOnClickListener(new View.OnClickListener() {
@@ -122,5 +147,17 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onCategorySelectedResult(String category) {
+        ArrayList<GroceryItem> items_of_category = Utils.getItemsByCategories(this,category);
+
+        if (items_of_category!= null){
+            adapter = new GroceryItemAdapter(this);
+            adapter.setGroceryItems(items_of_category);
+            search_result.setAdapter(adapter);
+            search_result.setLayoutManager(new GridLayoutManager(this,2));
+        }
     }
 }

@@ -183,4 +183,20 @@ public class Utils {
         return categoryItems;
     }
 
+    public  static ArrayList<GroceryItem> getItemsByCategories(Context context , String category){
+
+        ArrayList<GroceryItem> allItems = getAllItems(context);
+        ArrayList<GroceryItem> ans = new ArrayList<>();
+        for (GroceryItem i : allItems){
+            if (i.getCategory().equalsIgnoreCase(category)){
+                ans.add(i);
+            }
+        }
+        if (ans.size()==0){
+            return null;
+        }
+        return ans;
+
+    }
+
 }

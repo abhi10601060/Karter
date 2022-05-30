@@ -1,5 +1,7 @@
 package com.example.karter;
 
+import static com.example.karter.CategoryDialogue.CALLING_ACTIVITY;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class AllProducts extends AppCompatActivity {
+
+    private  static  final  String ACTIVITY_NAME= "all_product";
+
 
     private DrawerLayout drawer ;
     private MaterialToolbar toolbar;
@@ -45,6 +50,13 @@ public class AllProducts extends AppCompatActivity {
                         Toast.makeText(AllProducts.this, "Cart Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menu_category:
+
+                         CategoryDialogue categoryDialogue = new CategoryDialogue();
+                         Bundle bundle = new Bundle();
+                         bundle.putString(CALLING_ACTIVITY,ACTIVITY_NAME);
+                         categoryDialogue.setArguments(bundle);
+                         categoryDialogue.show(getSupportFragmentManager(),"select_category");
+
                         Toast.makeText(AllProducts.this, "category Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menu_terms:

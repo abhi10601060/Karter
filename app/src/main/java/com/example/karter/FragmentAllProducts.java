@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import java.util.Comparator;
 
 public class FragmentAllProducts extends Fragment {
 
+    private EditText search_bar;
     private RecyclerView category_RV;
     private  RecyclerView popular_RV;
     private RecyclerView new_items_Rv;
@@ -45,6 +47,8 @@ public class FragmentAllProducts extends Fragment {
 
         handleBottomNavigation();
 
+        handleSearchBar();
+
         return view;
     }
 
@@ -62,6 +66,7 @@ public class FragmentAllProducts extends Fragment {
 
         bottomNavigationView=view.findViewById(R.id.btm_navigation_bar);
 
+        search_bar=view.findViewById(R.id.search_bar);
 
     }
     private  void  initRecViews(){
@@ -126,6 +131,17 @@ public class FragmentAllProducts extends Fragment {
                         break;
                 }
                 return false;
+            }
+        });
+    }
+    private void handleSearchBar(){
+        search_bar.setCursorVisible(false);
+        search_bar.setFocusable(false);
+        search_bar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),SearchActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }
