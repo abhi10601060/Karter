@@ -7,23 +7,23 @@
     tools:context=".SearchActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/theme"
-        android:id="@+id/search_toolbar"/>
+        android:background="@color/theme" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_toolbar"
-        android:layout_marginBottom="60dp">
+        android:layout_above="@+id/sa_btm_navigation_bar"
+        android:layout_below="@+id/search_toolbar">
+
         <RelativeLayout
+            android:id="@+id/sa_search_bar_RL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_centerHorizontal="true"
-            android:id="@+id/sa_search_bar_RL"
-            >
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/search_activity_search_bar"
@@ -36,12 +36,12 @@
                 android:padding="5dp" />
 
             <RelativeLayout
+                android:id="@+id/sa_search_icon"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
-                android:background="@drawable/search_btn_backgroud"
-                android:layout_toRightOf="@+id/search_activity_search_bar"
                 android:layout_marginLeft="3dp"
-                android:id="@+id/sa_search_icon">
+                android:layout_toRightOf="@+id/search_activity_search_bar"
+                android:background="@drawable/search_btn_backgroud">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -53,54 +53,56 @@
 
 
         </RelativeLayout>
+
         <LinearLayout
+            android:id="@+id/sa_categories_LL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sa_search_bar_RL"
-            android:id="@+id/sa_categories_LL"
-            >
+            android:layout_below="@+id/sa_search_bar_RL">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="first_Category"
                 android:id="@+id/sa_txt_first_category"
-                android:layout_marginLeft="18dp"/>
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="second_category"
+                android:layout_marginLeft="18dp"
+                android:text="first_Category" />
+
+            <TextView
                 android:id="@+id/sa_txt_second_category"
-                android:layout_marginLeft="10dp"/>
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="third_Category"
+                android:layout_marginLeft="10dp"
+                android:text="second_category" />
+
+            <TextView
                 android:id="@+id/sa_txt_third_category"
-                android:layout_marginLeft="10dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="third_Category" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/sa_txt_see_all_categories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sa_categories_LL"
-            android:layout_marginTop="5dp"
-            android:text="See All Categories"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:textColor="@color/theme"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
-            android:id="@+id/sa_txt_see_all_categories"/>
+            android:text="See All Categories"
+            android:textColor="@color/theme"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sa_search_RV"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@+id/sa_txt_see_all_categories"
-            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:id="@+id/sa_search_RV"/>
+            android:layout_marginTop="10dp" />
 
     </RelativeLayout>
 
