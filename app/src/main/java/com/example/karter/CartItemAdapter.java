@@ -18,6 +18,11 @@ import java.util.ArrayList;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder> {
 
+    public interface ChangeQuantity{
+        void onQuantityAdded(CartItem item);
+        void onQuantityReduced(CartItem item);
+    }
+
     public  interface  CartItemDelete{
         void onDeleteCartItemResult(CartItem item);
     }
@@ -85,6 +90,40 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             }
         });
 
+        holder.plus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    ChangeQuantity changeQuantity = (ChangeQuantity) context;
+                    changeQuantity.onQuantityAdded(allCartItems.get(holder.getAdapterPosition()));
+                    notifyDataSetChanged();
+                }
+                catch (ClassCastException e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        holder.minus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (allCartItems.get(holder.getAdapterPosition()).getQuantity()>1){
+                    try {
+                        ChangeQuantity changeQuantity = (ChangeQuantity) context;
+                        changeQuantity.onQuantityReduced(allCartItems.get(holder.getAdapterPosition()));
+                        notifyDataSetChanged();
+                    }
+                    catch (ClassCastException e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+
+
 
     }
 
@@ -95,7 +134,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
     protected class  ViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView item_img , cross;
+        private ImageView item_img , cross , plus_btn , minus_btn;
         private  TextView cart_item_name , price , total_price , quantity;
 
         public ViewHolder(@NonNull View itemView) {
@@ -109,6 +148,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             quantity=itemView.findViewById(R.id.cart_item_quantity);
 
             cross = itemView.findViewById(R.id.cart_item_cross_icon);
+
+            plus_btn=itemView.findViewById(R.id.cart_item_plus_btn);
+            minus_btn=itemView.findViewById(R.id.cart_item_minus_btn);
 
         }
     }

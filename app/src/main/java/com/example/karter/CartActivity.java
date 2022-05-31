@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete {
+public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete , CartItemAdapter.ChangeQuantity {
 
     private MaterialToolbar toolbar;
     private BottomNavigationView bottomNavigationView;
@@ -56,6 +56,38 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
         transaction.replace(R.id.cart_activity_fragment_container,fragment);
         transaction.commit();
 
+
+    }
+
+    @Override
+    public void onQuantityAdded(CartItem item) {
+        Utils.addQuantity(this,item);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
+
+
+        CartFragment fragment = new CartFragment();
+        fragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.cart_activity_fragment_container,fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onQuantityReduced(CartItem item) {
+        Utils.reduceQuantity(this, item);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("cart", Utils.getAllCartItems(this));
+
+        CartFragment fragment = new CartFragment();
+        fragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.cart_activity_fragment_container,fragment);
+        transaction.commit();
 
     }
 }
