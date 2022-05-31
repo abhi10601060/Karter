@@ -1,6 +1,7 @@
 package com.example.karter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
@@ -20,6 +21,10 @@ public class CartActivity extends AppCompatActivity {
         initView();
         setSupportActionBar(toolbar);
         bottomNavigationView.setSelectedItemId(R.id.btm_cart);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.cart_activity_fragment_container,new CartFragment());
+        transaction.commit();
 
     }
     private void initView(){

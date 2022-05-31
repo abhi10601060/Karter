@@ -116,6 +116,8 @@ public class FragmentAllProducts extends Fragment {
                 switch (item.getItemId()){
                     case R.id.btm_cart:
                         // TODO: 29-05-2022 go to cart activity
+                        Intent intent1 = new Intent(getActivity(),CartActivity.class);
+                        startActivity(intent1);
                         break;
                     case R.id.btm_search:
                         // TODO: 29-05-2022 go to search activity

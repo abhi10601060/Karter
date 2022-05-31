@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -47,6 +48,9 @@ public class AllProducts extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.menu_cart:
+                        Intent intent = new Intent(AllProducts.this,CartActivity.class);
+                        startActivity(intent);
+
                         Toast.makeText(AllProducts.this, "Cart Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menu_category:

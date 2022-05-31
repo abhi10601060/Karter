@@ -2,4 +2,6 @@
     <string name="app_name">Karter</string>
     <string name="drawer_open">Drawer_close</string>
     <string name="drawer_close">Drawer_open</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
