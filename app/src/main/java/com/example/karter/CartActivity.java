@@ -8,10 +8,11 @@ import android.os.Bundle;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete {
 
     private MaterialToolbar toolbar;
     private BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +24,38 @@ public class CartActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.btm_cart);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.cart_activity_fragment_container,new CartFragment());
+
+        CartFragment cartFragment = new CartFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
+
+        cartFragment.setArguments(bundle);
+
+        transaction.replace(R.id.cart_activity_fragment_container,cartFragment);
         transaction.commit();
+
 
     }
     private void initView(){
         toolbar=findViewById(R.id.cart_activity_toolbar);
         bottomNavigationView=findViewById(R.id.cart_activity_btm_navigation_bar);
+    }
+
+    @Override
+    public void onDeleteCartItemResult(CartItem item) {
+        Utils.removeCartItem(this,item);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
+
+        CartFragment fragment = new CartFragment();
+        fragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.cart_activity_fragment_container,fragment);
+        transaction.commit();
+
+
     }
 }

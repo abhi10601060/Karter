@@ -85,6 +85,14 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
 
                 description.setText(incomingItem.getDesc());
+                
+                add_to_cart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Utils.addCartItem(DetailsActivity.this,new CartItem(incomingItem,amount));
+                        Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 handleRating();
                 handleReview();
@@ -117,6 +125,8 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
         third_star=findViewById(R.id.third_star_container);
 
         review_RV= findViewById(R.id.details_Review_RV);
+        
+        add_to_cart=findViewById(R.id.details_add_to_cart_Rl);
 
     }
 

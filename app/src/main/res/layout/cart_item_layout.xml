@@ -23,8 +23,8 @@
             android:id="@+id/cart_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/cart_item_image"
             android:text="cart item name"
             android:textSize="18dp"
@@ -34,8 +34,8 @@
             android:id="@+id/cart_item_quantity_container_RL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="65dp"
             android:layout_toRightOf="@+id/cart_item_image"
             android:background="@drawable/add_btn"
             android:paddingStart="10dp"
@@ -86,22 +86,29 @@
             android:id="@+id/cart_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignBottom="@+id/cart_item_name"
-            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
             android:text="\u20B9100"
             android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/cart_item_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/cart_item_quantity_container_RL"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
             android:text="\u20B9100"
             android:textSize="18dp"
-            android:layout_marginEnd="5dp"
-            android:textStyle="bold"
-            android:id="@+id/cart_item_total_price"/>
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_cross"
+            android:id="@+id/cart_item_cross_icon"/>
 
 
     </RelativeLayout>

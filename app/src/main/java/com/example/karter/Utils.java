@@ -219,9 +219,21 @@ public class Utils {
             editor.commit();
         }
         else {
-            allCartItems.add(item);
+            ArrayList<CartItem> newCartItems = new ArrayList<>();
+            boolean found = false;
+            for(CartItem i : allCartItems){
+                if (item.getItem().getName().equals(i.getItem().getName())){
+                    int newQuantity=i.getQuantity()+item.getQuantity();
+                    i.setQuantity(newQuantity);
+                    found=true;
+                }
+                newCartItems.add(i);
+            }
+            if (found==false){
+                newCartItems.add(item);
+            }
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(ALL_CART_ITEMS, gson.toJson(allCartItems));
+            editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
             editor.commit();
         }
     }

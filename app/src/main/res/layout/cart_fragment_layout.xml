@@ -157,7 +157,8 @@
             android:layout_above="@+id/price_RL"
             android:layout_below="@+id/checkout_btn"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"/>
 
 
 
