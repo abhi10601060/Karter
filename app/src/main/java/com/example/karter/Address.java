@@ -1,11 +1,34 @@
 package com.example.karter;
 
-public class Address {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Address implements Parcelable {
     private String name;
     private String Address;
     private String zipCode;
     private String email;
     private String contactNo;
+
+    protected Address(Parcel in) {
+        name = in.readString();
+        Address = in.readString();
+        zipCode = in.readString();
+        email = in.readString();
+        contactNo = in.readString();
+    }
+
+    public static final Creator<Address> CREATOR = new Creator<Address>() {
+        @Override
+        public Address createFromParcel(Parcel in) {
+            return new Address(in);
+        }
+
+        @Override
+        public Address[] newArray(int size) {
+            return new Address[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -53,5 +76,19 @@ public class Address {
         this.zipCode = zipCode;
         this.email = email;
         this.contactNo = contactNo;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(Address);
+        parcel.writeString(zipCode);
+        parcel.writeString(email);
+        parcel.writeString(contactNo);
     }
 }

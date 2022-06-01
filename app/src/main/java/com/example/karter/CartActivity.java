@@ -7,13 +7,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Switch;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete , CartItemAdapter.ChangeQuantity {
+public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete , CartItemAdapter.ChangeQuantity, AddressAdapter.RemoveAddress {
 
     private MaterialToolbar toolbar;
     private BottomNavigationView bottomNavigationView;
@@ -129,4 +130,17 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
 
     }
 
+    @Override
+    public void onAddressRemoved(Address address) {
+        Utils.removeAddresses(this,address);
+
+        Bundle bundle =new Bundle();
+        bundle.putParcelableArrayList("address", Utils.getAllAddresses(this));
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        AllAddressesFragment allAddressesFragment = new AllAddressesFragment();
+        allAddressesFragment.setArguments(bundle);
+        transaction.replace(R.id.cart_activity_fragment_container,allAddressesFragment);
+        transaction.commit();
+    }
 }

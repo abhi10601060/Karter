@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name :"
+        android:id="@+id/add_address_txt_name"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/add_address_edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_address_txt_name"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Enter Name here..."
+        android:minHeight="48dp"
+        android:padding="3dp"
+        android:paddingStart="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address :"
+        android:id="@+id/add_address_txt_address"
+        android:layout_below="@+id/add_address_edt_name"
+        android:layout_marginTop="5dp"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/add_address_edt_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_address_txt_address"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Enter Address here..."
+        android:padding="3dp"
+        android:paddingStart="10dp"
+        android:lines="4"
+        android:gravity="start"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zip Code :"
+        android:id="@+id/add_address_txt_zip"
+        android:layout_below="@+id/add_address_edt_address"
+        android:layout_marginTop="5dp"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/add_address_edt_zip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_address_txt_zip"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Enter Zip Code here..."
+        android:minHeight="48dp"
+        android:padding="3dp"
+        android:paddingStart="10dp"
+        android:inputType="number"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Number :"
+        android:id="@+id/add_address_txt_contact_no"
+        android:layout_below="@+id/add_address_edt_zip"
+        android:layout_marginTop="5dp"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/add_address_edt_contact_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_address_txt_contact_no"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Enter Contact number here..."
+        android:minHeight="48dp"
+        android:padding="3dp"
+        android:paddingStart="10dp"
+        android:inputType="number"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name :"
+        android:id="@+id/add_address_txt_email"
+        android:layout_below="@+id/add_address_edt_contact_no"
+        android:layout_marginTop="5dp"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/add_address_edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_address_txt_email"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Enter Email here..."
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:padding="3dp"
+        android:paddingStart="10dp" />
+
+    <TextView
+        android:id="@+id/add_address_txt_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_address_edt_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="WARNING"
+        android:textColor="@color/theme"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_address_txt_warning"
+        android:layout_centerHorizontal="true"
+        android:text="add address"
+        android:id="@+id/add_address_btn_add"
+        android:layout_marginTop="5dp"/>
+
+
+
+
+</RelativeLayout>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class CartFragment extends Fragment   {
 
     private RelativeLayout if_empty , cart;
-    private Button btn_start_shopping;
+    private Button btn_start_shopping , btn_checkout;
     private RecyclerView cart_item_RV;
     private  ArrayList<CartItem> myCart;
     private TextView total_price, tax , delivery_charges , total_amount;
@@ -49,6 +50,20 @@ public class CartFragment extends Fragment   {
 
             handleCart();
             priceCalculation();
+            btn_checkout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putParcelableArrayList("address",Utils.getAllAddresses(getActivity()));
+
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    AllAddressesFragment allAddressesFragment = new AllAddressesFragment();
+                    allAddressesFragment.setArguments(bundle1);
+                    transaction.replace(R.id.cart_activity_fragment_container,allAddressesFragment);
+                    transaction.commit();
+                }
+            });
         }
 
 
@@ -65,6 +80,8 @@ public class CartFragment extends Fragment   {
         total_price=view.findViewById(R.id.cart_fragment_total_price);
         delivery_charges=view.findViewById(R.id.cart_fragment_delivery_charges);
         tax=view.findViewById(R.id.cart_fragment_tax);
+
+        btn_checkout=view.findViewById(R.id.checkout_btn);
 
     }
     private void handleEmptyCart(){
@@ -101,8 +118,6 @@ public class CartFragment extends Fragment   {
         delivery_charges.setText("\u20B9"+charges);
         tax.setText("\u20B9"+tx);
         total_amount.setText("\u20B9"+ta);
-
-
 
     }
 
