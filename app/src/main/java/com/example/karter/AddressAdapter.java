@@ -23,6 +23,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         void onAddressRemoved(Address address);
     }
 
+    public interface AddressSelected{
+        void onAddressSelected(Address address);
+    }
+
     private ArrayList<Address> myAddresses;
     private Context context;
 
@@ -52,13 +56,23 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 // TODO: 01-06-2022 move to checkoutFragment
+
+                try {
+                    AddressSelected addressSelected =(AddressSelected) context;
+                    addressSelected.onAddressSelected(myAddresses.get(holder.getAdapterPosition()));
+                }
+                catch (ClassCastException e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
         holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                // TODO: 01-06-2022 remove that address
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(context)
                         .setMessage("Do you want to delete this Address...")
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

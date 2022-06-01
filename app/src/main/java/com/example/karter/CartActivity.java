@@ -14,7 +14,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete , CartItemAdapter.ChangeQuantity, AddressAdapter.RemoveAddress {
+public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete , CartItemAdapter.ChangeQuantity, AddressAdapter.RemoveAddress , AddressAdapter.AddressSelected {
 
     private MaterialToolbar toolbar;
     private BottomNavigationView bottomNavigationView;
@@ -141,6 +141,18 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
         AllAddressesFragment allAddressesFragment = new AllAddressesFragment();
         allAddressesFragment.setArguments(bundle);
         transaction.replace(R.id.cart_activity_fragment_container,allAddressesFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onAddressSelected(Address address) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("payment_address",address);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        PaymentFragment paymentFragment = new PaymentFragment();
+        paymentFragment.setArguments(bundle);
+        transaction.replace(R.id.cart_activity_fragment_container,paymentFragment);
         transaction.commit();
     }
 }

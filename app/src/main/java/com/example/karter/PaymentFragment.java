@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 public class PaymentFragment extends Fragment {
 
     private TextView name, item_list,address , contact_details,total_amount;
@@ -24,6 +26,38 @@ public class PaymentFragment extends Fragment {
         View view = inflater.inflate(R.layout.payment_fragment_layout,container,false);
 
         initViews(view);
+        Bundle bundle = getArguments();
+        if (bundle!= null){
+            Address incomingAddress = bundle.getParcelable("payment_address");
+
+            if (address!=null){
+
+                name.setText(incomingAddress.getName());
+                address.setText(incomingAddress.getAddress()+" - "+incomingAddress.getZipCode());
+                contact_details.setText(incomingAddress.getContactNo()+" / "+incomingAddress.getEmail());
+
+                ArrayList<CartItem> myCart = Utils.getAllCartItems(getActivity());
+
+                double total = 0;
+                int idx =1;
+                for (CartItem i : myCart){
+                    item_list.setText(item_list.getText()+"\n"+
+                            idx+". "+ i.getItem().getName()+"  (x"+i.getQuantity()+")");
+                    total+=i.getItem().getPrice()*i.getQuantity();
+                    idx++;
+                }
+
+                total_amount.setText("\u20B9"+total);
+
+
+
+
+
+            }
+
+
+
+        }
         return view;
     }
 

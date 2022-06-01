@@ -14,43 +14,41 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/payment_fragment_txt_item_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="List Of Items :"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:id="@+id/payment_fragment_txt_item_list"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Actual List"
-                android:layout_below="@id/payment_fragment_txt_item_list"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:textSize="15dp"
                 android:id="@+id/payment_fragment_item_list"
-                />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/payment_fragment_txt_item_list"
+                android:layout_marginLeft="30dp"
+                android:text=""
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/payment_fragment_txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/payment_fragment_item_list"
+                android:layout_marginTop="10dp"
                 android:text="Name :"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/payment_fragment_item_list"
-                android:id="@+id/payment_fragment_txt_name"/>
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/payment_fragment_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Actual name"
                 android:layout_below="@id/payment_fragment_txt_name"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="30dp"
-                android:textSize="15dp"
-                android:id="@+id/payment_fragment_name"
-                />
+                android:layout_marginTop="5dp"
+                android:text="Actual name"
+                android:textSize="15dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,11 +89,21 @@
                 android:id="@+id/payment_fragment_contact_details"
                 />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Options :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/payment_fragment_contact_details"
+                android:id="@+id/payment_fragment_txt_payment_options"/>
+
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/payment_fragment_contact_details"
-                android:layout_marginTop="10dp"
+                android:layout_below="@+id/payment_fragment_txt_payment_options"
+
                 android:id="@+id/payment_radio_grp"
                 android:orientation="vertical"
                 >
@@ -191,6 +199,7 @@
             android:id="@+id/payment_fragment_txt_total_amount"/>
 
         <TextView
+            android:id="@+id/payment_fragment_total_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/payment_fragment_txt_total_amount"
@@ -198,8 +207,7 @@
             android:text="\u20B91005.0"
             android:textColor="@color/black"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:id="@+id/payment_fragment_total_amount"/>
+            android:textStyle="bold" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
