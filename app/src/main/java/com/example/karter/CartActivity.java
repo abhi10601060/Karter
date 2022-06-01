@@ -1,12 +1,17 @@
 package com.example.karter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Switch;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete , CartItemAdapter.ChangeQuantity {
 
@@ -21,7 +26,8 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
 
         initView();
         setSupportActionBar(toolbar);
-        bottomNavigationView.setSelectedItemId(R.id.btm_cart);
+        handleBottomNavigation();
+
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -40,6 +46,38 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
     private void initView(){
         toolbar=findViewById(R.id.cart_activity_toolbar);
         bottomNavigationView=findViewById(R.id.cart_activity_btm_navigation_bar);
+    }
+
+    private void  handleBottomNavigation(){
+
+        bottomNavigationView.setSelectedItemId(R.id.btm_cart);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.btm_cart:
+                        // TODO: 29-05-2022 go to cart activity
+                        break;
+                    case R.id.btm_search:
+                        // TODO: 29-05-2022 go to search activity
+                        Intent intent1 = new Intent(CartActivity.this, SearchActivity.class);
+
+                        startActivity(intent1);
+                        break;
+                    case R.id.btm_home:
+                        // TODO: 29-05-2022 go to home activity
+                        Intent intent = new Intent(CartActivity.this,AllProducts.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        break;
+
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -90,4 +128,5 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
         transaction.commit();
 
     }
+
 }
