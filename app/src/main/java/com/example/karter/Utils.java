@@ -18,9 +18,13 @@ public class Utils {
     private static final String DB_NAME = "fake_database";
     private static  final  String ALL_ITEMS = "all_items";
     private static final String ALL_CART_ITEMS= "all_CartItems";
+    private static final String ALL_ADDRESSES= "all_Addresses";
+
     private static  final Gson gson = new Gson();
     private  static  final Type groceryType = new TypeToken<ArrayList<GroceryItem>>(){}.getType();
     private  static  final Type cartItemType = new TypeToken<ArrayList<CartItem>>(){}.getType();
+    private  static  final Type addressType = new TypeToken<ArrayList<Address>>(){}.getType();
+
     private  static  int Id=0;
 
 
@@ -296,6 +300,52 @@ public class Utils {
 //        editor.remove(ALL_CART_ITEMS);
         editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
         editor.commit();
+    }
+
+    public static ArrayList<Address> getAllAddresses(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+        ArrayList<Address> allAddresses = gson.fromJson(sharedPreferences.getString(ALL_ADDRESSES,null),addressType);
+        return allAddresses;
+    }
+    public static void addAddress(Context context , Address address){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+        ArrayList<Address> addresses = gson.fromJson(sharedPreferences.getString(ALL_ADDRESSES,null),addressType);
+
+        if (addresses==null){
+            ArrayList<Address> newAddresses = new ArrayList<>();
+            newAddresses.add(address);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ALL_ADDRESSES, gson.toJson(newAddresses));
+            editor.commit();
+        }
+        else {
+            addresses.add(address);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ALL_ADDRESSES, gson.toJson(addresses));
+            editor.commit();
+        }
+    }
+
+    public static  void  removeAddresses(Context context, Address address){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+        ArrayList<Address> addresses = gson.fromJson(sharedPreferences.getString(ALL_ADDRESSES,null),addressType);
+        ArrayList<Address> newAddresses= new ArrayList<>();
+
+        for (Address a : addresses){
+            if (!address.getAddress().equals(a.getAddress())){
+                newAddresses.add(a);
+            }
+        }
+        if (newAddresses.size()==0){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ALL_ADDRESSES,null);
+            editor.commit();
+        }
+        else {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ALL_ADDRESSES, gson.toJson(newAddresses));
+            editor.commit();
+        }
     }
 
 
