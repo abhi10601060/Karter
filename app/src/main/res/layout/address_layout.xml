@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/address_parent_RL"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name :"
+            android:textStyle="bold"
+            android:id="@+id/address_txt_name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name :"
+            android:layout_below="@+id/address_txt_name"
+           android:layout_marginTop="3dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/address_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Details :"
+            android:textStyle="bold"
+            android:layout_below="@+id/address_name"
+            android:layout_marginTop="3dp"
+            android:id="@+id/address_txt_contact_details"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="94262294262  :"
+            android:layout_below="@+id/address_txt_contact_details"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/address_contact_details"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address :"
+            android:layout_below="@+id/address_contact_details"
+            android:layout_marginTop="3dp"
+            android:textStyle="bold"
+            android:id="@+id/address_txt_address"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name basdhbah ajdsnjka andja adja jdnjajsndajnd 889 888"
+            android:layout_below="@+id/address_txt_address"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/address_address"/>
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
