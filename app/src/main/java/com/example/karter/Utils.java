@@ -348,5 +348,13 @@ public class Utils {
         }
     }
 
+    public static void clearCart(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(ALL_CART_ITEMS);
+        editor.commit();
+
+    }
+
 
 }
