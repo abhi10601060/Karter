@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="Payment Successful !"
+        android:layout_centerInParent="true"
+        android:textColor="#1CB80F"
+        android:id="@+id/txt_payment_successful"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        app:srcCompat="@drawable/ic_success"
+        tools:layout_editor_absoluteX="128dp"
+        tools:layout_editor_absoluteY="102dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/txt_payment_successful"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_below="@+id/txt_payment_successful"
+        android:text="Your order has been placed successfully."
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txt_confirmation"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_below="@+id/txt_confirmation"
+        android:text="Thank You..."
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txt_than_you"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="continue shopping"
+        android:layout_below="@+id/txt_than_you"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:id="@+id/btn_continue_shopping"
+        android:padding="10dp"/>
+
+
+</RelativeLayout>
