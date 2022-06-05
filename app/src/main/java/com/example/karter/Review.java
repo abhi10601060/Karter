@@ -7,6 +7,17 @@ public class Review {
     private String name;
     private String text;
     private  String date;
+    private int rating;
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+
 
     public int getItemId() {
         return itemId;
@@ -50,11 +61,12 @@ public class Review {
         this.date = date;
     }
 
-    public Review(int itemId, String name, String text, String date) {
+    public Review(int itemId, String name, String text, String date , int rating) {
         this.itemId = itemId;
         this.name = name;
         this.text = text;
         this.date = date;
+        this.rating=rating;
     }
 
 

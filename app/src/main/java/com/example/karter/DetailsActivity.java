@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,12 +20,14 @@ import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview , ReviewAdapter.RemoveReview {
 
+    private static final String TAG = "DetailsActivity";
+
     private MaterialToolbar toolbar ;
     public static final String GROCERY_ITEM_KEY = "incoming_item";
 
     private TextView name , price , quantity , total_price , description , add_review;
-    private ImageView image , plus,minus, rating1 , rating2, rating3;
-    private RelativeLayout add_to_cart, first_star,second_star , third_star ;
+    private ImageView image , plus,minus, rating1 , rating2, rating3 , rating4,rating5;
+    private RelativeLayout add_to_cart, first_star,second_star , third_star, fourth_star,fifth_star ;
     private RecyclerView review_RV;
     private ReviewAdapter reviewAdapter = new ReviewAdapter(this);
 
@@ -119,10 +122,14 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
         rating1=findViewById(R.id.first_star);
         rating2=findViewById(R.id.second_star);
         rating3=findViewById(R.id.third_star);
+        rating4=findViewById(R.id.fourth_star);
+        rating5=findViewById(R.id.fifth_star);
 
         first_star=findViewById(R.id.first_star_container);
         second_star=findViewById(R.id.second_star_container);
         third_star=findViewById(R.id.third_star_container);
+        fourth_star=findViewById(R.id.fourth_star_container);
+        fifth_star=findViewById(R.id.fifth_star_container);
 
         review_RV= findViewById(R.id.details_Review_RV);
         
@@ -131,72 +138,76 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
     }
 
     private void handleRating(){
-        switch (incomingItem.getRate()){
+        ArrayList<Review> reviews = Utils.getReviews(this,incomingItem.getId());
+
+        int r = 0;
+        if (reviews!=null && reviews.size()!=0){
+            for (Review e : reviews){
+                r=r+e.getRating();
+            }
+            r=r/reviews.size();
+        }
+        Log.d(TAG, "handleRating: rating is " + r);
+
+
+        switch (r){
 
             case 0 :
                 rating1.setVisibility(View.GONE);
                 rating2.setVisibility(View.GONE);
                 rating3.setVisibility(View.GONE);
+                rating4.setVisibility(View.GONE);
+                rating5.setVisibility(View.GONE);
                 break;
 
             case 1 :
                 rating1.setVisibility(View.VISIBLE);
                 rating2.setVisibility(View.GONE);
                 rating3.setVisibility(View.GONE);
+                rating4.setVisibility(View.GONE);
+                rating5.setVisibility(View.GONE);
                 break;
 
             case 2 :
                 rating1.setVisibility(View.VISIBLE);
                 rating2.setVisibility(View.VISIBLE);
                 rating3.setVisibility(View.GONE);
+                rating4.setVisibility(View.GONE);
+                rating5.setVisibility(View.GONE);
                 break;
 
             case 3 :
                 rating1.setVisibility(View.VISIBLE);
                 rating2.setVisibility(View.VISIBLE);
                 rating3.setVisibility(View.VISIBLE);
+                rating4.setVisibility(View.GONE);
+                rating5.setVisibility(View.GONE);
+                break;
+            case 4 :
+                rating1.setVisibility(View.VISIBLE);
+                rating2.setVisibility(View.VISIBLE);
+                rating3.setVisibility(View.VISIBLE);
+                rating4.setVisibility(View.VISIBLE);
+                rating5.setVisibility(View.GONE);
+                break;
+            case 5 :
+                rating1.setVisibility(View.VISIBLE);
+                rating2.setVisibility(View.VISIBLE);
+                rating3.setVisibility(View.VISIBLE);
+                rating4.setVisibility(View.VISIBLE);
+                rating5.setVisibility(View.VISIBLE);
                 break;
 
             default:
+                rating1.setVisibility(View.VISIBLE);
+                rating2.setVisibility(View.GONE);
+                rating3.setVisibility(View.GONE);
+                rating4.setVisibility(View.GONE);
+                rating5.setVisibility(View.VISIBLE);
                 break;
         }
 
 
-
-        first_star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(incomingItem.getRate()!= 1){
-                    Utils.changeRate(DetailsActivity.this,incomingItem.getId(),1);
-                    incomingItem.setRate(1);
-                    handleRating();
-                }
-            }
-        });
-
-        second_star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(incomingItem.getRate()!= 2){
-                    Utils.changeRate(DetailsActivity.this,incomingItem.getId(),2);
-                    incomingItem.setRate(2);
-                    handleRating();
-                }
-
-            }
-        });
-
-        third_star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(incomingItem.getRate()!= 3){
-                    Utils.changeRate(DetailsActivity.this,incomingItem.getId(),3);
-                    incomingItem.setRate(3);
-                    handleRating();
-                }
-
-            }
-        });
     }
 
     private void handleReview(){
@@ -226,6 +237,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
         if (newReviews!= null){
             reviewAdapter.setAllReviews(newReviews);
+            handleRating();
             Toast.makeText(this, "Review added successfully", Toast.LENGTH_SHORT).show();
         }
 
@@ -240,6 +252,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
     public void onRemoveResult(Review review) {
         Utils.removeReview(this,incomingItem.getId(),review);
         ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
+        handleRating();
 
         if (newReviews!=null){
             reviewAdapter.setAllReviews(newReviews);

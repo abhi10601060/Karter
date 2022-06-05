@@ -50,24 +50,152 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_search_bar"
             android:ems="10"
             android:gravity="start|top"
             android:hint="Your Review..."
             android:inputType="textMultiLine"
             android:lines="5"
-            android:background="@drawable/custom_search_bar"
-            android:padding="5dp"/>
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/review_dialogue_txt_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/review_dialogue_edt_review"
+            android:layout_centerHorizontal="true"
+            android:text="Rate Product"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/review_dialogue_stars_RL"
+            android:layout_below="@+id/review_dialogue_txt_rate"
+            android:layout_marginTop="3dp"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_dialogue_first_star_container">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_hollow_star"
+                    android:id="@+id/review_first_hollow_star"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_star"
+                    android:id="@+id/review_first_star"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_dialogue_second_star_container"
+                android:layout_toRightOf="@+id/review_dialogue_first_star_container">
+                <ImageView
+                    android:id="@+id/review_second_hollow_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+
+                    android:src="@drawable/ic_hollow_star" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_star"
+
+                    android:id="@+id/review_second_star"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_dialogue_third_star_container"
+                android:layout_toRightOf="@+id/review_dialogue_second_star_container">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_hollow_star"
+
+                    android:id="@+id/review_third_hollow_star"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_star"
+
+                    android:id="@+id/review_third_star"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_dialogue_fourth_star_container"
+                android:layout_toRightOf="@+id/review_dialogue_third_star_container">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_hollow_star"
+
+                    android:id="@+id/review_fourth_hollow_star"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_star"
+                    android:id="@+id/review_fourth_star"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_dialogue_fifth_star_container"
+                android:layout_toRightOf="@+id/review_dialogue_fourth_star_container">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_hollow_star"
+
+                    android:id="@+id/review_fifth_hollow_star"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_star"
+
+                    android:id="@+id/review_fifth_star"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+
+
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/review_dialogue_txt_warning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/review_dialogue_edt_review"
+            android:layout_below="@+id/review_dialogue_stars_RL"
             android:layout_centerHorizontal="true"
             android:text="WARNING"
             android:textColor="@color/theme"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:layout_marginTop="3dp"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -75,7 +203,8 @@
             android:layout_below="@id/review_dialogue_txt_warning"
             android:layout_centerHorizontal="true"
             android:text="add"
-            android:id="@+id/review_dialogue_btn_add"/>
+            android:id="@+id/review_dialogue_btn_add"
+            android:visibility="visible"/>
 
     </RelativeLayout>
 

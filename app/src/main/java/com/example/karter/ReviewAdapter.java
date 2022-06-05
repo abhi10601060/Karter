@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,6 +46,52 @@ public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolde
         holder.name.setText(allReviews.get(position).getName());
         holder.text.setText(allReviews.get(position).getText());
         holder.date.setText(allReviews.get(position).getDate());
+
+        switch (allReviews.get(position).getRating()){
+            case 1 :
+                holder.first_star.setVisibility(View.VISIBLE);
+                holder.second_star.setVisibility(View.GONE);
+                holder.third_star.setVisibility(View.GONE);
+                holder.fourth_star.setVisibility(View.GONE);
+                holder.fifth_star.setVisibility(View.GONE);
+                break;
+
+            case 2 :
+                holder.first_star.setVisibility(View.VISIBLE);
+                holder.second_star.setVisibility(View.VISIBLE);
+                holder.third_star.setVisibility(View.GONE);
+                holder.fourth_star.setVisibility(View.GONE);
+                holder.fifth_star.setVisibility(View.GONE);
+                break;
+            case 3 :
+                holder.first_star.setVisibility(View.VISIBLE);
+                holder.second_star.setVisibility(View.VISIBLE);
+                holder.third_star.setVisibility(View.VISIBLE);
+                holder.fourth_star.setVisibility(View.GONE);
+                holder.fifth_star.setVisibility(View.GONE);
+                break;
+            case 4 :
+                holder.first_star.setVisibility(View.VISIBLE);
+                holder.second_star.setVisibility(View.VISIBLE);
+                holder.third_star.setVisibility(View.VISIBLE);
+                holder.fourth_star.setVisibility(View.VISIBLE);
+                holder.fifth_star.setVisibility(View.GONE);
+                break;
+            case 5 :
+                holder.first_star.setVisibility(View.VISIBLE);
+                holder.second_star.setVisibility(View.VISIBLE);
+                holder.third_star.setVisibility(View.VISIBLE);
+                holder.fourth_star.setVisibility(View.VISIBLE);
+                holder.fifth_star.setVisibility(View.VISIBLE);
+                break;
+
+            default:
+                break;
+        }
+
+
+
+
 
         holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -88,6 +135,7 @@ public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolde
 
         private TextView name, date, text;
         private RelativeLayout parent;
+        private ImageView first_star, second_star,third_star , fourth_star,fifth_star;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +144,12 @@ public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolde
             text = itemView.findViewById(R.id.review_description);
             date= itemView.findViewById(R.id.review_date);
             parent = itemView.findViewById(R.id.review_RL);
+
+            first_star =itemView.findViewById(R.id.review_layout_first_star);
+            second_star =itemView.findViewById(R.id.review_layout_second_star);
+            third_star =itemView.findViewById(R.id.review_layout_third_star);
+            fourth_star =itemView.findViewById(R.id.review_layout_fourth_star);
+            fifth_star =itemView.findViewById(R.id.review_layout_fifth_star);
 
         }
     }

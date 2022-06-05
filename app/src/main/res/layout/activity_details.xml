@@ -44,16 +44,59 @@
                     android:layout_below="@+id/details_img"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Rate"
+                    android:text="Rating"
                     android:textSize="18dp"
                     android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/fifth_star_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/txt_rate"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:id="@+id/fifth_hollow_star"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_hollow_star" />
+
+                    <ImageView
+                        android:id="@+id/fifth_star"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_star"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fourth_star_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/txt_rate"
+                    android:layout_toLeftOf="@+id/fifth_star_container">
+
+                    <ImageView
+                        android:id="@+id/fourth_hollow_star"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_hollow_star" />
+
+                    <ImageView
+                        android:id="@+id/fourth_star"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_star"
+                        android:visibility="gone" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/third_star_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/txt_rate"
-                    android:layout_alignParentEnd="true">
+                    android:layout_toLeftOf="@+id/fourth_star_container">
 
                     <ImageView
                         android:id="@+id/third_hollow_star"
@@ -75,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/txt_rate"
-                    android:layout_toLeftOf="@+id/third_star_container">
+                    android:layout_toLeftOf="@id/third_star_container">
 
                     <ImageView
                         android:id="@+id/second_hollow_star"
@@ -89,6 +132,7 @@
                         android:layout_height="25dp"
                         android:src="@drawable/ic_star"
                         android:visibility="gone" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -96,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/txt_rate"
-                    android:layout_toLeftOf="@+id/second_star_container">
+                    android:layout_toLeftOf="@id/second_star_container">
 
                     <ImageView
                         android:id="@+id/first_hollow_star"
@@ -109,7 +153,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_star"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                 </RelativeLayout>
 
