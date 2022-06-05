@@ -148,6 +148,10 @@ public class PaymentFragment extends Fragment {
 
                             Bundle bundle = new Bundle();
                             bundle.putString("order_key" , "success");
+                            ArrayList<CartItem> cartItems = Utils.getAllCartItems(getActivity());
+                            for(CartItem i : cartItems){
+                                Utils.increasePopularity(getActivity(),i.getItem());
+                            }
                             Utils.clearCart(getActivity());
 
                             // TODO: 04-06-2022 Increase the [popularity rating of each item in cart

@@ -356,5 +356,22 @@ public class Utils {
 
     }
 
+    public  static  void increasePopularity(Context context , GroceryItem item){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+
+        ArrayList<GroceryItem> items = getAllItems(context);
+        ArrayList<GroceryItem> newItems = new ArrayList<>();
+        for(GroceryItem i : items){
+            if (i.getName().equals(item.getName())){
+                i.setPopularityPoint(i.getPopularityPoint()+1);
+            }
+            newItems.add(i);
+        }
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(ALL_ITEMS);
+        editor.putString(ALL_ITEMS, gson.toJson(newItems));
+        editor.commit();
+    }
+
 
 }

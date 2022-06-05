@@ -83,9 +83,17 @@ public class FragmentAllProducts extends Fragment {
     }
 
     private void handlePopular(){
+        ArrayList<GroceryItem> items = Utils.getAllItems(getActivity());
+        Comparator<GroceryItem> comparator = new Comparator<GroceryItem>() {
+            @Override
+            public int compare(GroceryItem t, GroceryItem t1) {
+                return t1.getPopularityPoint()-t.getPopularityPoint();
+            }
+        };
+        Collections.sort(items,comparator);
 
         GroceryItemAdapter adapter = new GroceryItemAdapter(getActivity());
-        adapter.setGroceryItems(Utils.getAllItems(getActivity()));
+        adapter.setGroceryItems(items);
         popular_RV.setAdapter(adapter);
         popular_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
     }
