@@ -51,7 +51,6 @@ public class AllProducts extends AppCompatActivity {
                         Intent intent = new Intent(AllProducts.this,CartActivity.class);
                         startActivity(intent);
 
-                        Toast.makeText(AllProducts.this, "Cart Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menu_category:
 
@@ -61,12 +60,14 @@ public class AllProducts extends AppCompatActivity {
                          categoryDialogue.setArguments(bundle);
                          categoryDialogue.show(getSupportFragmentManager(),"select_category");
 
-                        Toast.makeText(AllProducts.this, "category Selected", Toast.LENGTH_SHORT).show();
+
                         break;
                     case R.id.menu_terms:
                         Toast.makeText(AllProducts.this, "Terms Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menu_abot_us:
+                        Intent aboutIntent = new Intent(AllProducts.this,AboutActivity.class);
+                        startActivity(aboutIntent);
                         Toast.makeText(AllProducts.this, "About us Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menu_licenses:
