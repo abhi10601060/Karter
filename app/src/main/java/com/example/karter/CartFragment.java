@@ -110,7 +110,7 @@ public class CartFragment extends Fragment   {
         for (CartItem i : myCart){
             tp+=i.getItem().getPrice()*i.getQuantity();
         }
-        double tx = tp*20.0/100.0;
+        double tx = tp*10.0/100.0;
 
         double ta = tp+charges+tx;
 

@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cart_fragment_txt_delivery_charges"
                 android:layout_marginTop="3dp"
-                android:text="Tax :" />
+                android:text="Tax (10%):" />
 
             <View
                 android:id="@+id/_cart_fragment_line"

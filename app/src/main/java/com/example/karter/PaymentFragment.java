@@ -63,6 +63,10 @@ public class PaymentFragment extends Fragment {
                     total+=i.getItem().getPrice()*i.getQuantity();
                     idx++;
                 }
+                double delivery_charge=40;
+                double tax = total*10.0/100.0;
+
+                total=total+delivery_charge+tax;
 
                 total_amount.setText("\u20B9"+total);
 
