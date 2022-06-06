@@ -71,6 +71,10 @@ public class AllProducts extends AppCompatActivity {
                         Toast.makeText(AllProducts.this, "About us Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menu_licenses:
+
+                        LiscencesDialogue dialogue = new LiscencesDialogue();
+                        dialogue.show(getSupportFragmentManager(),"licences");
+
                         Toast.makeText(AllProducts.this, "Licenses Selected", Toast.LENGTH_SHORT).show();
                         break;
                     default:
