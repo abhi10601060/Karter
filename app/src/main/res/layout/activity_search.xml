@@ -65,21 +65,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
-                android:text="first_Category" />
+                android:text="first_Category"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/sa_txt_second_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="second_category" />
+                android:text="second_category"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/sa_txt_third_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="third_Category" />
+                android:text="third_Category"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -32,6 +33,7 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
     private RecyclerView search_result;
     private GroceryItemAdapter adapter;
     private BottomNavigationView bottomNavigationView;
+    private MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,9 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
         setContentView(R.layout.activity_search);
 
         initViews();
+        setSupportActionBar(toolbar);
         handleBottomNavigation();
+        handleThreeCategories();
 
 
         all_category.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +106,8 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
         search_result=findViewById(R.id.sa_search_RV);
 
         bottomNavigationView=findViewById(R.id.sa_btm_navigation_bar);
+
+        toolbar=findViewById(R.id.search_toolbar);
     }
     private void initSearch(){
         if (!search_bar.getText().toString().equals("")){
@@ -150,6 +156,54 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
                 return false;
             }
         });
+    }
+
+    private void handleThreeCategories(){
+        ArrayList<String> categories = Utils.getAllCategories();
+
+        first_category.setText(categories.get(0));
+        second_category.setText(categories.get(1));
+        third_category.setText(categories.get(2));
+
+
+        first_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter=new GroceryItemAdapter(SearchActivity.this);
+                ArrayList<GroceryItem> items = Utils.getItemsByCategories(SearchActivity.this,first_category.getText().toString());
+                if (items!=null && items.size()!=0){
+                    adapter.setGroceryItems(items);
+                    search_result.setAdapter(adapter);
+                    search_result.setLayoutManager(new GridLayoutManager(SearchActivity.this,2));
+                }
+            }
+        });
+        second_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter=new GroceryItemAdapter(SearchActivity.this);
+                ArrayList<GroceryItem> items = Utils.getItemsByCategories(SearchActivity.this,second_category.getText().toString());
+                if (items!=null && items.size()!=0){
+                    adapter.setGroceryItems(items);
+                    search_result.setAdapter(adapter);
+                    search_result.setLayoutManager(new GridLayoutManager(SearchActivity.this,2));
+                }
+
+            }
+        });
+        third_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter=new GroceryItemAdapter(SearchActivity.this);
+                ArrayList<GroceryItem> items = Utils.getItemsByCategories(SearchActivity.this,third_category.getText().toString());
+                if (items!=null && items.size()!=0){
+                    adapter.setGroceryItems(items);
+                    search_result.setAdapter(adapter);
+                    search_result.setLayoutManager(new GridLayoutManager(SearchActivity.this,2));
+                }
+            }
+        });
+
     }
 
     @Override
