@@ -4,11 +4,13 @@ import static com.example.karter.CategoryDialogue.CALLING_ACTIVITY;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -63,19 +65,28 @@ public class AllProducts extends AppCompatActivity {
 
                         break;
                     case R.id.menu_terms:
-                        Toast.makeText(AllProducts.this, "Terms Selected", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AllProducts.this)
+                                .setMessage("There are no terms.Enjoy using this App...")
+                                .setNegativeButton("DISMISS", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                        builder.create().show();
+
                         break;
                     case R.id.menu_abot_us:
                         Intent aboutIntent = new Intent(AllProducts.this,AboutActivity.class);
                         startActivity(aboutIntent);
-                        Toast.makeText(AllProducts.this, "About us Selected", Toast.LENGTH_SHORT).show();
+
                         break;
                     case R.id.menu_licenses:
 
                         LiscencesDialogue dialogue = new LiscencesDialogue();
                         dialogue.show(getSupportFragmentManager(),"licences");
 
-                        Toast.makeText(AllProducts.this, "Licenses Selected", Toast.LENGTH_SHORT).show();
+
                         break;
                     default:
                         break;
