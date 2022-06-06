@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class FragmentAllProducts extends Fragment {
     private  RecyclerView popular_RV;
     private RecyclerView new_items_Rv;
     private BottomNavigationView bottomNavigationView;
+    private TextView see_all;
 
 
     @Nullable
@@ -49,6 +51,8 @@ public class FragmentAllProducts extends Fragment {
 
         handleSearchBar();
 
+        handleSeeAll();
+
         return view;
     }
 
@@ -67,6 +71,8 @@ public class FragmentAllProducts extends Fragment {
         bottomNavigationView=view.findViewById(R.id.btm_navigation_bar);
 
         search_bar=view.findViewById(R.id.search_bar);
+
+        see_all=view.findViewById(R.id.all_product_see_all);
 
     }
     private  void  initRecViews(){
@@ -152,6 +158,16 @@ public class FragmentAllProducts extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),SearchActivity.class);
                 getActivity().startActivity(intent);
+            }
+        });
+    }
+    private void handleSeeAll(){
+        see_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),SearchActivity.class);
+                intent.putExtra("category","all");
+                startActivity(intent);
             }
         });
     }

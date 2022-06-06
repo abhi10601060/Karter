@@ -60,7 +60,13 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
         if (intent!= null){
             String incoming_category = intent.getStringExtra("category");
             if (incoming_category!=null){
-                ArrayList<GroceryItem> items_of_category = Utils.getItemsByCategories(this,incoming_category);
+                ArrayList<GroceryItem> items_of_category ;
+                if (incoming_category.equals("all")) {
+                    items_of_category=Utils.getAllItems(SearchActivity.this);
+                }
+                else {
+                     items_of_category=Utils.getItemsByCategories(this,incoming_category);
+                }
                 if (items_of_category!= null){
                     adapter = new GroceryItemAdapter(this);
                     adapter.setGroceryItems(items_of_category);
@@ -135,8 +141,8 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
                     case R.id.btm_cart:
                         // TODO: 29-05-2022 go to cart activity
                         Intent intent1 = new Intent(SearchActivity.this, CartActivity.class);
-
                         startActivity(intent1);
+
                         break;
                     case R.id.btm_search:
                         // TODO: 29-05-2022 go to search activity
