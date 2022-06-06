@@ -55,7 +55,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 01-06-2022 move to checkoutFragment
 
                 try {
                     AddressSelected addressSelected =(AddressSelected) context;

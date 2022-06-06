@@ -139,17 +139,14 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.btm_cart:
-                        // TODO: 29-05-2022 go to cart activity
+
                         Intent intent1 = new Intent(SearchActivity.this, CartActivity.class);
                         startActivity(intent1);
 
                         break;
-                    case R.id.btm_search:
-                        // TODO: 29-05-2022 go to search activity
 
-                        break;
                     case R.id.btm_home:
-                        // TODO: 29-05-2022 go to home activity
+
                         Intent intent = new Intent(SearchActivity.this,AllProducts.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
