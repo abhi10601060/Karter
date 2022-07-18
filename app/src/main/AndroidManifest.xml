@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Karter" >
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutActivity"
             android:exported="false" />
         <activity
