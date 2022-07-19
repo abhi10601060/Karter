@@ -43,7 +43,7 @@
             android:textSize="19dp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/login_welcome_txt"
@@ -52,15 +52,18 @@
             android:layout_marginRight="30dp"
             android:background="@drawable/login_warning_background"
             android:padding="2dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:id="@+id/login_warning_RL">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="          Login Failed! Invalid Username or Password"
-                android:textColor="#A80850" />
+                android:text="Login Failed! Invalid Username or Password"
+                android:textColor="#A80850"
+                android:layout_centerHorizontal="true"
+                />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/login_email_txt"
@@ -88,7 +91,8 @@
             android:hint="  Enter Email"
             android:inputType="textEmailAddress"
             android:lines="1"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:paddingEnd="3dp"/>
 
         <TextView
             android:id="@+id/login_txt_password"
@@ -116,7 +120,8 @@
             android:hint="  Enter Password"
             android:inputType="textPassword"
             android:lines="1"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:paddingEnd="3dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/login_floating_btn"
