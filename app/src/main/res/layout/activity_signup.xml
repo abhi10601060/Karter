@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login"
+    tools:context=".SignupActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="130dp"
+        android:background="@drawable/login_drawable">
+
+
+        <TextView
+            android:id="@+id/signup_txt_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Welcome!"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/signup_txt_create_acct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signup_txt_welcome"
+            android:layout_marginLeft="30dp"
+            android:text="Create an account..."
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/signup_txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_txt_create_acct"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/signup_edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/signup_txt_name"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/custom_edt_bar"
+            android:drawableStart="@drawable/ic_name"
+            android:drawablePadding="3dp"
+            android:hint="Enter your name here..."
+            android:inputType="text"
+            android:lines="1"
+            android:paddingLeft="3dp" />
+
+        <TextView
+            android:id="@+id/signup_txt_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_edt_name"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/signup_txt_email_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_edt_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="27dp"
+            android:layout_toRightOf="@+id/signup_txt_email"
+            android:text="*(Entered Wrong Email)"
+            android:textColor="@color/red"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/signup_edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/signup_txt_email"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/custom_edt_bar"
+            android:drawableStart="@drawable/ic_mail"
+            android:drawablePadding="3dp"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:paddingLeft="3dp" />
+
+        <TextView
+            android:id="@+id/signup_txt_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_edt_email"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:text="Password"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/signup_txt_minimum_len"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_edt_email"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="27dp"
+            android:layout_toRightOf="@+id/signup_txt_password"
+            android:text="(Minimum 8 letters)"
+            android:textSize="15dp" />
+
+
+        <EditText
+            android:id="@+id/signup_edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/signup_txt_password"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/custom_edt_bar"
+            android:drawableStart="@drawable/ic_pass"
+            android:drawablePadding="3dp"
+            android:hint="Enter Password"
+            android:inputType="text"
+            android:lines="1"
+            android:paddingLeft="3dp" />
+
+        <TextView
+            android:id="@+id/signup_txt_confirm_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_edt_password"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:text="Confirm Password"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/signup_txt_confirm_password_wraning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_edt_password"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="27dp"
+            android:layout_toRightOf="@+id/signup_txt_confirm_password"
+            android:text="*(Password didn't match)"
+            android:textColor="@color/red"
+            android:textSize="15dp" />
+
+
+        <EditText
+            android:id="@+id/signup_edt_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/signup_txt_confirm_password"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/custom_edt_bar"
+            android:drawableStart="@drawable/ic_pass"
+            android:drawablePadding="3dp"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:paddingLeft="3dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/signUp_floating_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signup_edt_confirm_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_arrow"
+            app:maxImageSize="40dp"
+            app:rippleColor="@color/theme" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
