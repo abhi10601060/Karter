@@ -10,6 +10,7 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_mail.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_name.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_pass.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_profile.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_success.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/add_btn.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/cat1_background.xml" value="0.166" />
@@ -63,6 +64,7 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/review_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/menu/navigation_menu.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/menu/profile_menu.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.121" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.121" />
       </map>
