@@ -128,7 +128,9 @@ public class AllProducts extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.profile_menu_item:
                         Toast.makeText(AllProducts.this, "profile selected", Toast.LENGTH_SHORT).show();
-                        // TODO: 20-07-2022 move to profile Activity 
+                        // TODO: 20-07-2022 move to profile Activity
+//                        auth.signOut();
+                        startActivity(new Intent(AllProducts.this,ProfileActivity.class));
                         break;
                     default:
                         break;
@@ -149,7 +151,7 @@ public class AllProducts extends AppCompatActivity {
     private void handleAuth() {
         FirebaseUser user = auth.getCurrentUser();
         String[]name = user.getDisplayName().split(" ");
-        profile_name.setText("hi..!\n"+name[0]);
+        profile_name.setText("Hi..!\n"+name[0]);
     }
 
     private  void  initViews(){

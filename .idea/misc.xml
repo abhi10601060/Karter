@@ -7,6 +7,7 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_arrow.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_cart.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_fail.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_id.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_mail.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_name.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable-anydpi/ic_pass.xml" value="0.166" />
@@ -26,6 +27,10 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/details_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/details_quantity_btn.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.1515" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/ic_location_svgrepo_com.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/ic_sli.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/ic_user_profile_svgrepo_com.xml" value="0.166" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/icon_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/licences_background.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/login_drawable.xml" value="0.166" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/drawable/login_warning_background.xml" value="0.166" />
@@ -43,6 +48,7 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_main2.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_search.xml" value="0.24615384615384617" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_signup.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/add_address_fragment_layout.xml" value="0.25" />

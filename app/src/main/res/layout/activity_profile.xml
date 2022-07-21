@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_RL">
+
+                <TextView
+                    android:id="@+id/profile_txt_hello"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Hello there!"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_id"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/profile_txt_hello"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_id" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abhishek Velekar"
+                    android:layout_below="@+id/img_id"
+                    android:textSize="18dp"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:id="@+id/profile_id_name"
+                    />
+            </RelativeLayout>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_RL"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical"
+                >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/update_profile_RL"
+                >
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_background"
+                    android:id="@+id/update_img_RL"
+                    >
+
+                    <ImageView
+                        android:id="@+id/img_update"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_user_profile_svgrepo_com" />
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update Profile"
+                    android:textSize="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/update_img_RL"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"/>
+
+            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/address_profile_RL"
+                    android:layout_marginTop="30dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_background"
+                        android:id="@+id/address_img_RL"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_address"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_location_svgrepo_com" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saved Addresses"
+                        android:textSize="18dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/address_img_RL"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/history_profile_RL"
+                    android:layout_marginTop="30dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_background"
+                        android:id="@+id/history_img_RL"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_history"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_history" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order History"
+                        android:textSize="18dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/history_img_RL"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cards_profile_RL"
+                    android:layout_marginTop="30dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_background"
+                        android:id="@+id/cards_img_RL"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_cards"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_cards" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Card's"
+                        android:textSize="18dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/cards_img_RL"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/support_profile_RL"
+                    android:layout_marginTop="30dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_background"
+                        android:id="@+id/support_img_RL"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_support"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_support" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Support"
+                        android:textSize="18dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/support_img_RL"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/about_profile_RL"
+                    android:layout_marginTop="30dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_background"
+                        android:id="@+id/about_img_RL"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_about"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_about_svgrepo_com" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        android:textSize="18dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/about_img_RL"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/logout_profile_RL"
+                    android:layout_marginTop="30dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/icon_background"
+                        android:id="@+id/logout_img_RL"
+                        >
+
+                        <ImageView
+                            android:id="@+id/img_logout"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_exit" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Logout"
+                        android:textSize="18dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/logout_img_RL"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>
