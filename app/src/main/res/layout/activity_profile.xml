@@ -83,15 +83,16 @@
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_user_profile_svgrepo_com" />
                 </RelativeLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Update Profile"
-                    android:textSize="18dp"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/update_img_RL"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/black"/>
+                    android:layout_toRightOf="@+id/update_img_RL"
+                    android:text="Update Profile"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
 
             </RelativeLayout>
                 <RelativeLayout

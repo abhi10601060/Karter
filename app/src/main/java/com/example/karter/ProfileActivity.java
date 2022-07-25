@@ -35,10 +35,17 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(ProfileActivity.this,AboutActivity.class));
             }
         });
+        update_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileActivity.this,UpdateProfileActivity.class));
+            }
+        });
 
     }
 
     private void initViews() {
+        update_profile=findViewById(R.id.update_profile_RL);
         logout=findViewById(R.id.logout_profile_RL);
         about=findViewById(R.id.about_profile_RL);
         address=findViewById(R.id.address_profile_RL);
