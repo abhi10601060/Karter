@@ -129,7 +129,6 @@ public class AllProducts extends AppCompatActivity {
                     case R.id.profile_menu_item:
                         Toast.makeText(AllProducts.this, "profile selected", Toast.LENGTH_SHORT).show();
                         // TODO: 20-07-2022 move to profile Activity
-//                        auth.signOut();
                         startActivity(new Intent(AllProducts.this,ProfileActivity.class));
                         break;
                     default:
