@@ -3,6 +3,7 @@ package com.example.karter;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -15,6 +16,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Utils {
+
+    private static final String TAG = "Utils";
+
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     private static final String DB_NAME = "fake_database";
     private static  final  String ALL_ITEMS = "all_items";
     private static final String ALL_CART_ITEMS= "all_CartItems";
@@ -95,63 +101,63 @@ public class Utils {
 
     }
 
-    public static void  addReview(Context context , Review review , int itemId){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        ArrayList<GroceryItem> allItems = getAllItems(context);
+//    public static void  addReview(Context context , Review review , int itemId){
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+//        ArrayList<GroceryItem> allItems = getAllItems(context);
+//
+//        if (allItems!=null){
+//
+//            ArrayList<GroceryItem> newItems = new ArrayList<>();
+//            for(GroceryItem i : allItems){
+//                if (i.getId()==itemId){
+//                    ArrayList<Review> reviews = i.getReviews();
+//                    reviews.add(review);
+//                    i.setReviews(reviews);
+//                }
+//                newItems.add(i);
+//            }
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.remove(ALL_ITEMS);
+//            editor.putString(ALL_ITEMS,gson.toJson(newItems));
+//            editor.commit();
+//        }
+//    }
 
-        if (allItems!=null){
-
-            ArrayList<GroceryItem> newItems = new ArrayList<>();
-            for(GroceryItem i : allItems){
-                if (i.getId()==itemId){
-                    ArrayList<Review> reviews = i.getReviews();
-                    reviews.add(review);
-                    i.setReviews(reviews);
-                }
-                newItems.add(i);
-            }
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove(ALL_ITEMS);
-            editor.putString(ALL_ITEMS,gson.toJson(newItems));
-            editor.commit();
-        }
-    }
-
-    public static ArrayList<Review> getReviews(Context context , int itemId){
-
-        ArrayList<GroceryItem> allItems = getAllItems(context);
-
-        for (GroceryItem i : allItems){
-            if(itemId==i.getId()){
-                ArrayList<Review> reviews = i.getReviews();
-                return reviews;
-            }
-        }
-        return null;
-    }
-    public  static  void removeReview(Context context , int itemId , Review review){
-        ArrayList<GroceryItem> allItems = getAllItems(context);
-        ArrayList<GroceryItem> newItems=new ArrayList<>();
-        for (GroceryItem i : allItems){
-            if (itemId==i.getId()){
-                ArrayList<Review> reviews = i.getReviews();
-                ArrayList<Review> newReview = new ArrayList<>();
-                for (Review r : reviews){
-                    if (!r.equals(review)){
-                        newReview.add(r);
-                    }
-                }
-                i.setReviews(newReview);
-            }
-            newItems.add(i);
-        }
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(ALL_ITEMS);
-        editor.putString(ALL_ITEMS, gson.toJson(newItems));
-        editor.commit();
-
-    }
+//    public static ArrayList<Review> getReviews(Context context , int itemId){
+//
+//        ArrayList<GroceryItem> allItems = getAllItems(context);
+//
+//        for (GroceryItem i : allItems){
+//            if(itemId==i.getId()){
+//                ArrayList<Review> reviews = i.getReviews();
+//                return reviews;
+//            }
+//        }
+//        return null;
+//    }
+//    public  static  void removeReview(Context context , int itemId , Review review){
+//        ArrayList<GroceryItem> allItems = getAllItems(context);
+//        ArrayList<GroceryItem> newItems=new ArrayList<>();
+//        for (GroceryItem i : allItems){
+//            if (itemId==i.getId()){
+//                ArrayList<Review> reviews = i.getReviews();
+//                ArrayList<Review> newReview = new ArrayList<>();
+//                for (Review r : reviews){
+//                    if (!r.equals(review)){
+//                        newReview.add(r);
+//                    }
+//                }
+//                i.setReviews(newReview);
+//            }
+//            newItems.add(i);
+//        }
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.remove(ALL_ITEMS);
+//        editor.putString(ALL_ITEMS, gson.toJson(newItems));
+//        editor.commit();
+//
+//    }
     public static ArrayList<GroceryItem> searchByName(Context context , String name){
         ArrayList<GroceryItem> allItems = getAllItems(context);
         if (allItems!= null){

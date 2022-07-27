@@ -15,7 +15,7 @@ public class GroceryItem implements Parcelable {
     private int available_amount;
     private int rate;
     private int popularityPoint;
-    private ArrayList<Review> reviews;
+
 
     public GroceryItem( String name, double price, String desc, String imageUrl, String category, int available_amount) {
         this.id = Utils.getId();
@@ -27,7 +27,7 @@ public class GroceryItem implements Parcelable {
         this.available_amount = available_amount;
         this.rate=0;
         this.popularityPoint=0;
-        reviews= new ArrayList<>();
+
     }
 
     protected GroceryItem(Parcel in) {
@@ -66,7 +66,6 @@ public class GroceryItem implements Parcelable {
                 ", available_amount=" + available_amount +
                 ", rate=" + rate +
                 ", popularityPoint=" + popularityPoint +
-                ", reviews=" + reviews +
                 '}';
     }
 
@@ -142,13 +141,7 @@ public class GroceryItem implements Parcelable {
         this.popularityPoint = popularityPoint;
     }
 
-    public ArrayList<Review> getReviews() {
-        return reviews;
-    }
 
-    public void setReviews(ArrayList<Review> reviews) {
-        this.reviews = reviews;
-    }
 
     @Override
     public int describeContents() {
