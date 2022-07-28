@@ -18,14 +18,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity  implements CategoryDialogue.CategorySelected {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
 
     private TextView first_category , second_category , third_category , all_category;
     private EditText search_bar;
@@ -60,19 +67,7 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
         if (intent!= null){
             String incoming_category = intent.getStringExtra("category");
             if (incoming_category!=null){
-                ArrayList<GroceryItem> items_of_category ;
-                if (incoming_category.equals("all")) {
-                    items_of_category=Utils.getAllItems(SearchActivity.this);
-                }
-                else {
-                     items_of_category=Utils.getItemsByCategories(this,incoming_category);
-                }
-                if (items_of_category!= null){
-                    adapter = new GroceryItemAdapter(this);
-                    adapter.setGroceryItems(items_of_category);
-                    search_result.setAdapter(adapter);
-                    search_result.setLayoutManager(new GridLayoutManager(this,2));
-                }
+                setByCategory(incoming_category);
             }
         }
 
@@ -101,6 +96,49 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
             }
         });
     }
+
+    private void setByCategory(String incoming_category) {
+
+        ArrayList<GroceryItem> searchedItems = new ArrayList<>();
+        adapter = new GroceryItemAdapter(this);
+        adapter.setGroceryItems(searchedItems);
+        search_result.setAdapter(adapter);
+        search_result.setLayoutManager(new GridLayoutManager(this, 2));
+
+        if(incoming_category.equals("all")){
+            db.collection(ALL_GROCERY_ITEMS_COLLECTION)
+                    .orderBy("id" , Query.Direction.DESCENDING)
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    if(!queryDocumentSnapshots.isEmpty()){
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                            GroceryItem item = doc.toObject(GroceryItem.class);
+                            searchedItems.add(item);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+        else{
+            db.collection(ALL_GROCERY_ITEMS_COLLECTION)
+                    .whereEqualTo("category" , incoming_category)
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    if(!queryDocumentSnapshots.isEmpty()){
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                            GroceryItem item = doc.toObject(GroceryItem.class);
+                            searchedItems.add(item);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+    }
+
     private void  initViews(){
         first_category=findViewById(R.id.sa_txt_first_category);
         second_category=findViewById(R.id.sa_txt_second_category);

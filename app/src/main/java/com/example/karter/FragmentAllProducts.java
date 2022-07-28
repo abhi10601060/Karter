@@ -92,7 +92,13 @@ public class FragmentAllProducts extends Fragment {
     }
     private void handleCategories(){
 
-        ArrayList<String> allCategories=Utils.getAllCategories();
+        ArrayList<String> allCategories = new ArrayList<>();
+        allCategories.add("Healthy");
+        allCategories.add("Pizza");
+        allCategories.add("Beverages");
+        allCategories.add("Fruits");
+        allCategories.add("Cleansers");
+
         CategoryAdapter adapter = new CategoryAdapter(getActivity());
         adapter.setAllCategories(allCategories);
         category_RV.setAdapter(adapter);
