@@ -249,13 +249,6 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
 
     @Override
     public void onCategorySelectedResult(String category) {
-        ArrayList<GroceryItem> items_of_category = Utils.getItemsByCategories(this,category);
-
-        if (items_of_category!= null){
-            adapter = new GroceryItemAdapter(this);
-            adapter.setGroceryItems(items_of_category);
-            search_result.setAdapter(adapter);
-            search_result.setLayoutManager(new GridLayoutManager(this,2));
-        }
+        setByCategory(category);
     }
 }
