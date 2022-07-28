@@ -16,18 +16,19 @@ public class GroceryItem implements Parcelable {
     private int rate;
     private int popularityPoint;
 
+    public GroceryItem() {
+    }
 
-    public GroceryItem( String name, double price, String desc, String imageUrl, String category, int available_amount) {
-        this.id = Utils.getId();
+    public GroceryItem(int id,String name, double price, String desc, String imageUrl, String category, int available_amount , int rate,int popularityPoint) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.desc = desc;
         this.imageUrl = imageUrl;
         this.category = category;
         this.available_amount = available_amount;
-        this.rate=0;
-        this.popularityPoint=0;
-
+        this.rate=rate;
+        this.popularityPoint=popularityPoint;
     }
 
     protected GroceryItem(Parcel in) {

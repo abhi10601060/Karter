@@ -3,6 +3,7 @@ package com.example.karter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +31,11 @@ import java.util.Comparator;
 
 public class FragmentAllProducts extends Fragment {
 
+    private static final String TAG = "FragmentAllProducts";
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private static final String ALLGROCERYITEMS_COLLECTION = "AllGroceryItems";
+    
     private EditText search_bar;
     private RecyclerView category_RV;
     private  RecyclerView popular_RV;
@@ -59,7 +69,7 @@ public class FragmentAllProducts extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initRecViews();
+//        initRecViews();
     }
 
     private  void  initViews(View view){
@@ -89,7 +99,28 @@ public class FragmentAllProducts extends Fragment {
     }
 
     private void handlePopular(){
-        ArrayList<GroceryItem> items = Utils.getAllItems(getActivity());
+        ArrayList<GroceryItem> items = new ArrayList<>();
+        GroceryItemAdapter adapter = new GroceryItemAdapter(getActivity());
+        adapter.setGroceryItems(items);
+        popular_RV.setAdapter(adapter);
+        popular_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+        db.collection(ALLGROCERYITEMS_COLLECTION).
+                orderBy("id").
+                get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()){
+                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                        GroceryItem item = doc.toObject(GroceryItem.class);
+                        items.add(item);
+                        Log.d(TAG, "onSuccess: Item added from Firestore\n" + item.toString());
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+        // TODO: 28-07-2022 Order it by Popularity point
         Comparator<GroceryItem> comparator = new Comparator<GroceryItem>() {
             @Override
             public int compare(GroceryItem t, GroceryItem t1) {
@@ -98,10 +129,6 @@ public class FragmentAllProducts extends Fragment {
         };
         Collections.sort(items,comparator);
 
-        GroceryItemAdapter adapter = new GroceryItemAdapter(getActivity());
-        adapter.setGroceryItems(items);
-        popular_RV.setAdapter(adapter);
-        popular_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
     }
 
     private void handleNewItems(){
