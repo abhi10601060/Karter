@@ -33,7 +33,9 @@
                 android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="5dp"
                 android:hint="Find Your item here..."
-                android:padding="5dp" />
+                android:inputType="textCapWords"
+                android:padding="5dp"
+                android:lines="1"/>
 
             <RelativeLayout
                 android:id="@+id/sa_search_icon"

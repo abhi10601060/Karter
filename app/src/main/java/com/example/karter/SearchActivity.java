@@ -87,12 +87,12 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                initSearch();
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                initSearch();
             }
         });
     }
@@ -154,17 +154,32 @@ public class SearchActivity extends AppCompatActivity  implements CategoryDialog
         toolbar=findViewById(R.id.search_toolbar);
     }
     private void initSearch(){
+        ArrayList<GroceryItem> searchedItems = new ArrayList<>();
+
+        adapter = new GroceryItemAdapter(this);
+        adapter.setGroceryItems(searchedItems);
+        search_result.setAdapter(adapter);
+        search_result.setLayoutManager(new GridLayoutManager(this, 2));
+
         if (!search_bar.getText().toString().equals("")){
             String name = search_bar.getText().toString();
-            ArrayList<GroceryItem> result = Utils.searchByName(this,name);
-            if (result!=null){
 
-                adapter=new GroceryItemAdapter(this);
-                adapter.setGroceryItems(result);
-                search_result.setAdapter(adapter);
-                search_result.setLayoutManager(new GridLayoutManager(this,2));
-            }
-
+            db.collection(ALL_GROCERY_ITEMS_COLLECTION)
+                    .orderBy("name")
+                    .startAt(name)
+                    .endAt(name + "\uf8ff")
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    if(!queryDocumentSnapshots.isEmpty()){
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                            GroceryItem item = doc.toObject(GroceryItem.class);
+                            searchedItems.add(item);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
         }
     }
     private void handleBottomNavigation(){
