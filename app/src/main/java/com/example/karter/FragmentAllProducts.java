@@ -22,6 +22,7 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -132,22 +133,27 @@ public class FragmentAllProducts extends Fragment {
     }
 
     private void handleNewItems(){
-
-        Comparator<GroceryItem> comparator = new Comparator<GroceryItem>() {
-            @Override
-            public int compare(GroceryItem t1, GroceryItem t2) {
-                return t2.getId()-t1.getId();
-            }
-        };
-
-        ArrayList<GroceryItem> list = Utils.getAllItems(getActivity());
-
-        Collections.sort(list,comparator);
-
+        ArrayList<GroceryItem> list = new ArrayList<>();
         GroceryItemAdapter adapter = new GroceryItemAdapter(getActivity());
         adapter.setGroceryItems(list);
         new_items_Rv.setAdapter(adapter);
         new_items_Rv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+        db.collection(ALLGROCERYITEMS_COLLECTION).
+                orderBy("id" , Query.Direction.DESCENDING)
+                .limit(15)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(!queryDocumentSnapshots.isEmpty()){
+                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots ){
+                        GroceryItem item = doc.toObject(GroceryItem.class);
+                        list.add(item);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
 
     }
     private void handleBottomNavigation(){
