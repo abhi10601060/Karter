@@ -1,5 +1,7 @@
 package com.example.karter;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +16,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview , ReviewAdapter.RemoveReview {
+public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static  final  String REVIEW_COLLECTION = "Reviews";
+    private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
 
     private static final String TAG = "DetailsActivity";
 
@@ -33,7 +52,9 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
     private int amount = 1;
 
-    GroceryItem incomingItem;
+    private GroceryItem incomingItem;
+    private GroceryItem dummy;
+    private String DocId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,62 +68,82 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
         Intent intent = getIntent();
         if(intent!= null){
-            incomingItem = intent.getParcelableExtra(GROCERY_ITEM_KEY);
-            if (incomingItem!= null){
+            dummy = intent.getParcelableExtra(GROCERY_ITEM_KEY);
 
-                Glide.with(this)
-                        .asBitmap()
-                        .load(incomingItem.getImageUrl())
-                        .into(image);
-
-                name.setText(incomingItem.getName());
-                price.setText(""+incomingItem.getPrice());
-
-                quantity.setText(""+ amount);
-
-                double total_amount = incomingItem.getPrice() * this.amount;
-                total_price.setText(""+total_amount);
-
-                plus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        amount++;
-                        quantity.setText(""+ amount);
-                        double total_amount = incomingItem.getPrice() * amount;
-                        total_price.setText(""+total_amount);
-                    }
-                });
-
-
-                    minus.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if(amount>1){
-                            amount--;
-                            quantity.setText(""+ amount);
-                            double total_amount = incomingItem.getPrice() * amount;
-                            total_price.setText(""+total_amount);
-                            }
+            db.collection(ALL_GROCERY_ITEMS_COLLECTION)
+                    .whereEqualTo("id", dummy.getId())
+                    .limit(1)
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    if (queryDocumentSnapshots!=null){
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                            DocId = doc.getId();
+                            incomingItem = doc.toObject(GroceryItem.class);
+                            Log.d(TAG, "onSuccess: incoming item added");
                         }
-                    });
+                        if (incomingItem!=null){
+                            showItem();
+                        }
 
-
-                description.setText(incomingItem.getDesc());
-                
-                add_to_cart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Utils.addCartItem(DetailsActivity.this,new CartItem(incomingItem,amount));
-                        Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+            });
 
-                handleRating();
-                handleReview();
-
-
-            }
         }
+
+    }
+
+    private void showItem() {
+
+        Glide.with(this)
+                .asBitmap()
+                .load(incomingItem.getImageUrl())
+                .into(image);
+
+        name.setText(incomingItem.getName());
+        price.setText(""+incomingItem.getPrice());
+
+        quantity.setText(""+ amount);
+
+        double total_amount = incomingItem.getPrice() * this.amount;
+        total_price.setText(""+total_amount);
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                amount++;
+                quantity.setText(""+ amount);
+                double total_amount = incomingItem.getPrice() * amount;
+                total_price.setText(""+total_amount);
+            }
+        });
+
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(amount>1){
+                    amount--;
+                    quantity.setText(""+ amount);
+                    double total_amount = incomingItem.getPrice() * amount;
+                    total_price.setText(""+total_amount);
+                }
+            }
+        });
+
+
+        description.setText(incomingItem.getDesc());
+
+        add_to_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.addCartItem(DetailsActivity.this,new CartItem(incomingItem,amount));
+                Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        handleRating();
+        handleReview();
 
     }
 
@@ -138,16 +179,10 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
     }
 
     private void handleRating(){
-        ArrayList<Review> reviews = Utils.getReviews(this,incomingItem.getId());
-
-        int r = 0;
-        if (reviews!=null && reviews.size()!=0){
-            for (Review e : reviews){
-                r=r+e.getRating();
-            }
-            r=r/reviews.size();
+        int r=0;
+        if(incomingItem.getPopularityPoint()!=0){
+            r = incomingItem.getRate()/incomingItem.getPopularityPoint();
         }
-        Log.d(TAG, "handleRating: rating is " + r);
 
 
         switch (r){
@@ -212,11 +247,6 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
     private void handleReview(){
 
-
-        review_RV.setAdapter(reviewAdapter);
-        reviewAdapter.setAllReviews(Utils.getReviews(this,incomingItem.getId()));
-        review_RV.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-
         add_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,39 +257,134 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                 dialogue.show(getSupportFragmentManager(),"add_review");
             }
         });
+
+
+        ArrayList<Review> allReviews = new ArrayList<>();
+        reviewAdapter.setAllReviews(allReviews);
+        review_RV.setAdapter(reviewAdapter);
+        review_RV.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+
+        db.collection(REVIEW_COLLECTION)
+                .whereEqualTo("itemId",incomingItem.getId())
+                .orderBy("date" , Query.Direction.DESCENDING)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()){
+                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                        Review review = doc.toObject(Review.class);
+
+                        allReviews.add(review);
+                    }
+                    reviewAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+
     }
 
     @Override
     public void onAddReviewResult(Review review) {
+        db.collection(REVIEW_COLLECTION).add(review).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
 
-        Utils.addReview(this,review,incomingItem.getId());
-        ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
+                review.setReviewId(documentReference.getId());
 
-        if (newReviews!= null){
-            reviewAdapter.setAllReviews(newReviews);
-            handleRating();
-            Toast.makeText(this, "Review added successfully", Toast.LENGTH_SHORT).show();
-        }
+                db.runTransaction(new Transaction.Function<Void>() {
+                    @Nullable
+                    @Override
+                    public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                        DocumentReference doc = db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(DocId);
+                        DocumentSnapshot curDoc = transaction.get(doc);
+
+                        long newRate = curDoc.getLong("rate")+review.getRating();
+                        long newPopularity = curDoc.getLong("popularityPoint")+1;
+
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("rate",newRate);
+                        map.put("popularityPoint",newPopularity);
+
+                        transaction.update(doc,map);
+
+                        return null;
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        recreate();
+                        // TODO: 29-07-2022 Recreating activity here try to get optimal Alternative
+
+                        db.collection(REVIEW_COLLECTION).document(review.getReviewId()).set(review).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(DetailsActivity.this, "Review Added Successfully....", Toast.LENGTH_SHORT).show();
+                            }
+                        });              // this is here to get and change review id to query it while deleting....
+                        // TODO: 29-07-2022  do something optimized to remove this updating as well....
+                    }
+                });
+
+            }
+        });
 
 
-//        review_RV.setAdapter(reviewAdapter);
-//        review_RV.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+//       db.collection(REVIEW_COLLECTION).document().set(review).addOnCompleteListener(new OnCompleteListener<Void>() {
+//           @Override
+//           public void onComplete(@NonNull Task<Void> task) {
+//               if (task.isSuccessful()){
+//
+//                   db.runTransaction(new Transaction.Function<Void>() {
+//                       @Nullable
+//                       @Override
+//                       public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+//                           DocumentReference doc = db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(DocId);
+//                           DocumentSnapshot curDoc = transaction.get(doc);
+//
+//                           long newRate = curDoc.getLong("rate")+review.getRating();
+//                           long newPopularity = curDoc.getLong("popularityPoint")+1;
+//
+//                           Map<String,Object> map = new HashMap<>();
+//                           map.put("rate",newRate);
+//                           map.put("popularityPoint",newPopularity);
+//
+//                           transaction.update(doc,map);
+//
+//                           return null;
+//                       }
+//                   }).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                       @Override
+//                       public void onSuccess(Void unused) {
+//                           Toast.makeText(DetailsActivity.this, "Review Added successfully...", Toast.LENGTH_SHORT).show();
+//                           recreate();
+//                           // TODO: 29-07-2022 Recreating activity here try to get optimal Alternative
+//                       }
+//                   });
+//
+//               }
+//               else{
+//                   Toast.makeText(DetailsActivity.this, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+//               }
+//           }
+//       });
 
 
     }
-
-    @Override
-    public void onRemoveResult(Review review) {
-        Utils.removeReview(this,incomingItem.getId(),review);
-        ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
-        handleRating();
-
-        if (newReviews!=null){
-            reviewAdapter.setAllReviews(newReviews);
-            Toast.makeText(this, "Review removed successfully", Toast.LENGTH_SHORT).show();
-        }
-
-
-
-    }
+//
+//    @Override
+//    public void onRemoveResult(Review review) {
+//        Utils.removeReview(this,incomingItem.getId(),review);
+//        ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
+//        handleRating();
+//
+//        if (newReviews!=null){
+//            reviewAdapter.setAllReviews(newReviews);
+//            Toast.makeText(this, "Review removed successfully", Toast.LENGTH_SHORT).show();
+//        }
+//
+//
+//
+//    }
 }

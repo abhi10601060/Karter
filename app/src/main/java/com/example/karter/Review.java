@@ -5,6 +5,9 @@ import androidx.annotation.Nullable;
 import java.util.Date;
 
 public class Review {
+
+
+    private String ReviewId ="";
     private int itemId;
     private String UserId;
     private String name;
@@ -63,6 +66,13 @@ public class Review {
     public Review() {
     }
 
+    public String getReviewId() {
+        return ReviewId;
+    }
+
+    public void setReviewId(String reviewId) {
+        ReviewId = reviewId;
+    }
     public Review(int itemId, String userId, String name, String text, int rating, Date date) {
         this.itemId = itemId;
         UserId = userId;
