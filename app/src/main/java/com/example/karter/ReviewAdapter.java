@@ -13,11 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
+
+    private FirebaseAuth auth =FirebaseAuth.getInstance();
+    private FirebaseUser user = auth.getCurrentUser();
 
     public interface  RemoveReview{
         void onRemoveResult(Review review);
@@ -95,38 +101,40 @@ public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolde
 
 
 
+        if(user.getUid().equals(allReviews.get(holder.getAdapterPosition()).getUserId())){
 
+            holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
 
-        holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                            .setMessage("Do you want to delete this review...")
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                        .setMessage("Do you want to delete this review...")
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        })
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                try {
-                                    removeReview = (RemoveReview) context;
-                                    removeReview.onRemoveResult(allReviews.get(holder.getAdapterPosition()));
-                                    notifyDataSetChanged();
                                 }
-                                catch (ClassCastException e){
-                                    e.printStackTrace();
+                            })
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    try {
+                                        removeReview = (RemoveReview) context;
+                                        removeReview.onRemoveResult(allReviews.get(holder.getAdapterPosition()));
+                                        notifyDataSetChanged();
+                                    }
+                                    catch (ClassCastException e){
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                builder.create().show();
-                return true;
-            }
-        });
+                    builder.create().show();
+                    return true;
+                }
+            });
+
+        }
 
     }
 
