@@ -13,7 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
@@ -45,7 +47,9 @@ public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolde
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(allReviews.get(position).getName());
         holder.text.setText(allReviews.get(position).getText());
-        holder.date.setText(allReviews.get(position).getDate());
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        String date  = sd.format(allReviews.get(position).getDate());
+        holder.date.setText(date);
 
         switch (allReviews.get(position).getRating()){
             case 1 :

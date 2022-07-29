@@ -2,22 +2,15 @@ package com.example.karter;
 
 import androidx.annotation.Nullable;
 
+import java.util.Date;
+
 public class Review {
     private int itemId;
+    private String UserId;
     private String name;
     private String text;
-    private  String date;
     private int rating;
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-
+    private Date date;
 
     public int getItemId() {
         return itemId;
@@ -25,6 +18,14 @@ public class Review {
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
+    }
+
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 
     public String getName() {
@@ -35,16 +36,6 @@ public class Review {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "itemId=" + itemId +
-                ", name='" + name + '\'' +
-                ", text='" + text + '\'' +
-                ", date='" + date + '\'' +
-                '}';
-    }
-
     public String getText() {
         return text;
     }
@@ -53,27 +44,31 @@ public class Review {
         this.text = text;
     }
 
-    public String getDate() {
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public Review(int itemId, String name, String text, String date , int rating) {
+    public Review() {
+    }
+
+    public Review(int itemId, String userId, String name, String text, int rating, Date date) {
         this.itemId = itemId;
+        UserId = userId;
         this.name = name;
         this.text = text;
+        this.rating = rating;
         this.date = date;
-        this.rating=rating;
-    }
-
-
-    public boolean equals(Review r) {
-        if (this.name.equals(r.getName()) && this.text.equals(r.getText()) && this.date.equals(r.getDate())){
-            return true;
-        }
-        return false;
     }
 }

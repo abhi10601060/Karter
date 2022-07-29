@@ -18,10 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ReviewDialogue extends DialogFragment {
+
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private FirebaseUser user = auth.getCurrentUser();
 
     private int rating = 0;
 
@@ -31,7 +37,7 @@ public class ReviewDialogue extends DialogFragment {
 
     private  AddReview addReview;
 
-    private EditText review_name , review_text ;
+    private EditText  review_text ;
     private Button btn_add;
     private TextView warning;
     private ImageView first_star , second_star, third_star, fourth_star, fifth_star;
@@ -58,11 +64,11 @@ public class ReviewDialogue extends DialogFragment {
                 btn_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String name = review_name.getText().toString();
+
                         String review = review_text.getText().toString();
 
 
-                        if (name.equals("") || review.equals("") || rating==0){
+                        if ( review.equals("") || rating==0){
                             warning.setText("Fill All Blanks!!!");
                             warning.setVisibility(View.VISIBLE);
                         }
@@ -70,8 +76,8 @@ public class ReviewDialogue extends DialogFragment {
                             warning.setVisibility(View.GONE);
                             String date = getCurDate();
 
+                            Review review1 = new Review(item.getId(),user.getUid(),user.getDisplayName(),review,rating,Calendar.getInstance().getTime());
 
-                            Review review1 = new Review(item.getId(),name,review,date,rating);
                             try {
                                 addReview = (AddReview) getActivity();
 
@@ -94,7 +100,7 @@ public class ReviewDialogue extends DialogFragment {
         return builder.create();
     }
     private void initViews(View view){
-        review_name = view.findViewById(R.id.review_dialogue_edt_name);
+
         review_text=view.findViewById(R.id.review_dialogue_edt_review);
 
         btn_add =view.findViewById(R.id.review_dialogue_btn_add);
