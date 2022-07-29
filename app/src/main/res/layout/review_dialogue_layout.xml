@@ -29,24 +29,12 @@
         android:layout_below="@id/review_dialogue_header"
        >
 
-        <EditText
-            android:id="@+id/review_dialogue_edt_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="Your Name Here..."
-            android:minHeight="48dp"
-            android:background="@drawable/custom_search_bar"
-            android:paddingStart="5dp"/>
 
         <EditText
             android:id="@+id/review_dialogue_edt_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/review_dialogue_edt_name"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
@@ -198,13 +186,14 @@
             android:layout_marginTop="3dp"/>
 
         <Button
+            android:id="@+id/review_dialogue_btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/review_dialogue_txt_warning"
             android:layout_centerHorizontal="true"
             android:text="add"
-            android:id="@+id/review_dialogue_btn_add"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            android:layout_marginTop="5dp"/>
 
     </RelativeLayout>
 
