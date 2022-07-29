@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview  {
+public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview, ReviewAdapter.RemoveReview {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static  final  String REVIEW_COLLECTION = "Reviews";
@@ -334,22 +334,38 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
     }
 
-//    @Override
-//    public void onRemoveResult(Review review) {
-//        DocumentReference doc = db.collection(REVIEW_COLLECTION).document(review.getReviewId());
-//
-//        db.runTransaction(new Transaction.Function<Void>() {
-//            @Nullable
-//            @Override
-//            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-//
-//                DocumentReference item =db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(review.getItemId());
-//
-//                return null;
-//            }
-//        });
-//
-//        doc.delete();
-//        handleReview();
-//    }
+    @Override
+    public void onRemoveResult(Review review) {
+
+        DocumentReference doc = db.collection(REVIEW_COLLECTION).document(review.getReviewId());
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+
+                DocumentReference item =db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(review.getItemId());
+                DocumentSnapshot itemSnapshot = transaction.get(item);
+
+                long newRating = itemSnapshot.getLong("rate")-review.getRating();
+                long popularity = itemSnapshot.getLong("popularityPoint")-1;
+
+                Map<String,Object> map = new HashMap<>();
+                map.put("rate",newRating);
+                map.put("popularityPoint",popularity);
+
+                transaction.update(item,map);
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(DetailsActivity.this, "Review deleted successfully...", Toast.LENGTH_SHORT).show();
+                getIncomingItem(dummy);
+            }
+        });
+        doc.delete();
+
+        handleReview();
+
+    }
 }
