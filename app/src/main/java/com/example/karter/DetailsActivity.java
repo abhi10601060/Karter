@@ -70,28 +70,31 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
         if(intent!= null){
             dummy = intent.getParcelableExtra(GROCERY_ITEM_KEY);
 
-            db.collection(ALL_GROCERY_ITEMS_COLLECTION)
-                    .whereEqualTo("id", dummy.getId())
-                    .limit(1)
-                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    if (queryDocumentSnapshots!=null){
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
-                            DocId = doc.getId();
-                            incomingItem = doc.toObject(GroceryItem.class);
-                            Log.d(TAG, "onSuccess: incoming item added");
-                        }
-                        if (incomingItem!=null){
-                            showItem();
-                        }
-
-                    }
-                }
-            });
-
+            getIncomingItem(dummy);
         }
 
+    }
+
+    private void getIncomingItem(GroceryItem dummy) {
+        db.collection(ALL_GROCERY_ITEMS_COLLECTION)
+                .whereEqualTo("id", dummy.getId())
+                .limit(1)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (queryDocumentSnapshots!=null){
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                        DocId = doc.getId();
+                        incomingItem = doc.toObject(GroceryItem.class);
+                        Log.d(TAG, "onSuccess: incoming item added");
+                    }
+                    if (incomingItem!=null){
+                        showItem();
+                    }
+
+                }
+            }
+        });
     }
 
     private void showItem() {
@@ -314,8 +317,8 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                 }).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        recreate();
-                        // TODO: 29-07-2022 Recreating activity here try to get optimal Alternative
+                        getIncomingItem(dummy);
+
 
                         db.collection(REVIEW_COLLECTION).document(review.getReviewId()).set(review).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -329,47 +332,6 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
             }
         });
-
-
-//       db.collection(REVIEW_COLLECTION).document().set(review).addOnCompleteListener(new OnCompleteListener<Void>() {
-//           @Override
-//           public void onComplete(@NonNull Task<Void> task) {
-//               if (task.isSuccessful()){
-//
-//                   db.runTransaction(new Transaction.Function<Void>() {
-//                       @Nullable
-//                       @Override
-//                       public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-//                           DocumentReference doc = db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(DocId);
-//                           DocumentSnapshot curDoc = transaction.get(doc);
-//
-//                           long newRate = curDoc.getLong("rate")+review.getRating();
-//                           long newPopularity = curDoc.getLong("popularityPoint")+1;
-//
-//                           Map<String,Object> map = new HashMap<>();
-//                           map.put("rate",newRate);
-//                           map.put("popularityPoint",newPopularity);
-//
-//                           transaction.update(doc,map);
-//
-//                           return null;
-//                       }
-//                   }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                       @Override
-//                       public void onSuccess(Void unused) {
-//                           Toast.makeText(DetailsActivity.this, "Review Added successfully...", Toast.LENGTH_SHORT).show();
-//                           recreate();
-//                           // TODO: 29-07-2022 Recreating activity here try to get optimal Alternative
-//                       }
-//                   });
-//
-//               }
-//               else{
-//                   Toast.makeText(DetailsActivity.this, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
-//               }
-//           }
-//       });
-
 
     }
 //
