@@ -8,18 +8,18 @@ public class Review {
 
 
     private String ReviewId ="";
-    private int itemId;
+    private String itemId;
     private String UserId;
     private String name;
     private String text;
     private int rating;
     private Date date;
 
-    public int getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
@@ -73,7 +73,7 @@ public class Review {
     public void setReviewId(String reviewId) {
         ReviewId = reviewId;
     }
-    public Review(int itemId, String userId, String name, String text, int rating, Date date) {
+    public Review(String itemId, String userId, String name, String text, int rating, Date date) {
         this.itemId = itemId;
         UserId = userId;
         this.name = name;

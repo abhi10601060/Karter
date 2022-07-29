@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview {
+public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview  {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static  final  String REVIEW_COLLECTION = "Reviews";
@@ -255,7 +255,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
             public void onClick(View view) {
                 ReviewDialogue dialogue = new ReviewDialogue();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable(GROCERY_ITEM_KEY,incomingItem);
+                bundle.putString(GROCERY_ITEM_KEY,DocId);
                 dialogue.setArguments(bundle);
                 dialogue.show(getSupportFragmentManager(),"add_review");
             }
@@ -269,7 +269,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
 
         db.collection(REVIEW_COLLECTION)
-                .whereEqualTo("itemId",incomingItem.getId())
+                .whereEqualTo("itemId",DocId)
                 .orderBy("date" , Query.Direction.DESCENDING)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -319,7 +319,6 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                     public void onSuccess(Void unused) {
                         getIncomingItem(dummy);
 
-
                         db.collection(REVIEW_COLLECTION).document(review.getReviewId()).set(review).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -334,19 +333,23 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
         });
 
     }
-//
+
 //    @Override
 //    public void onRemoveResult(Review review) {
-//        Utils.removeReview(this,incomingItem.getId(),review);
-//        ArrayList<Review> newReviews = Utils.getReviews(this, incomingItem.getId());
-//        handleRating();
+//        DocumentReference doc = db.collection(REVIEW_COLLECTION).document(review.getReviewId());
 //
-//        if (newReviews!=null){
-//            reviewAdapter.setAllReviews(newReviews);
-//            Toast.makeText(this, "Review removed successfully", Toast.LENGTH_SHORT).show();
-//        }
+//        db.runTransaction(new Transaction.Function<Void>() {
+//            @Nullable
+//            @Override
+//            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
 //
+//                DocumentReference item =db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(review.getItemId());
 //
+//                return null;
+//            }
+//        });
 //
+//        doc.delete();
+//        handleReview();
 //    }
 }

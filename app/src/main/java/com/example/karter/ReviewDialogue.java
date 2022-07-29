@@ -55,7 +55,7 @@ public class ReviewDialogue extends DialogFragment {
         Bundle bundle = getArguments();
         if (bundle!= null){
 
-            GroceryItem item = bundle.getParcelable(GROCERY_ITEM_KEY);
+            String item = bundle.getString(GROCERY_ITEM_KEY);
 
 
             if(item!= null){
@@ -76,7 +76,7 @@ public class ReviewDialogue extends DialogFragment {
                             warning.setVisibility(View.GONE);
                             String date = getCurDate();
 
-                            Review review1 = new Review(item.getId(),user.getUid(),user.getDisplayName(),review,rating,Calendar.getInstance().getTime());
+                            Review review1 = new Review(item,user.getUid(),user.getDisplayName(),review,rating,Calendar.getInstance().getTime());
 
                             try {
                                 addReview = (AddReview) getActivity();
