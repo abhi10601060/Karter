@@ -3,38 +3,29 @@ package com.example.karter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class CartItem  implements Parcelable {
-    private GroceryItem item;
+public class CartItem   {
+
+    private String cartItemId;
     private int quantity;
+    private double singleItemPrice;
+    private double totalPrice ;
 
-    public CartItem(GroceryItem item, int quantity)  {
-        this.item = item;
+    public CartItem() {
+    }
+
+    public CartItem(String cartItemId, int quantity, double singleItemPrice, double totalPrice) {
+        this.cartItemId = cartItemId;
         this.quantity = quantity;
+        this.singleItemPrice = singleItemPrice;
+        this.totalPrice = totalPrice;
     }
 
-    protected CartItem(Parcel in) {
-        item = in.readParcelable(GroceryItem.class.getClassLoader());
-        quantity = in.readInt();
+    public String getCartItemId() {
+        return cartItemId;
     }
 
-    public static final Creator<CartItem> CREATOR = new Creator<CartItem>() {
-        @Override
-        public CartItem createFromParcel(Parcel in) {
-            return new CartItem(in);
-        }
-
-        @Override
-        public CartItem[] newArray(int size) {
-            return new CartItem[size];
-        }
-    };
-
-    public GroceryItem getItem() {
-        return item;
-    }
-
-    public void setItem(GroceryItem item) {
-        this.item = item;
+    public void setCartItemId(String cartItemId) {
+        this.cartItemId = cartItemId;
     }
 
     public int getQuantity() {
@@ -45,14 +36,19 @@ public class CartItem  implements Parcelable {
         this.quantity = quantity;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public double getSingleItemPrice() {
+        return singleItemPrice;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeParcelable(item, i);
-        parcel.writeInt(quantity);
+    public void setSingleItemPrice(double singleItemPrice) {
+        this.singleItemPrice = singleItemPrice;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

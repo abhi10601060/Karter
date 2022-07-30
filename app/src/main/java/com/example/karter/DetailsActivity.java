@@ -2,10 +2,12 @@ package com.example.karter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,8 +41,11 @@ import java.util.Map;
 public class DetailsActivity extends AppCompatActivity  implements ReviewDialogue.AddReview, ReviewAdapter.RemoveReview {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private static  final  String REVIEW_COLLECTION = "Reviews";
     private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
+    private static final String ALL_USERS_COLLECTION = "Users";
+    private static final String USER_CART_COLLECTION = "Cart";
 
     private static final String TAG = "DetailsActivity";
 
@@ -141,12 +149,111 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
         add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.addCartItem(DetailsActivity.this,new CartItem(incomingItem,amount));
+                CartItem cartItem  = new CartItem(DocId,amount,incomingItem.getPrice(),total_amount);
+                addCartItemToFirestore(cartItem);
                 Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
             }
         });
         handleRating();
         handleReview();
+
+    }
+
+    private void addCartItemToFirestore(CartItem cartItem) {
+
+       DocumentReference userDoc = db.collection(ALL_USERS_COLLECTION).document(user.getUid());
+       userDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+           @Override
+           public void onSuccess(DocumentSnapshot documentSnapshot) {
+               if (!documentSnapshot.exists()){
+                   AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this)
+                           .setTitle("Complete Profile")
+                           .setMessage("Please complete your profile before adding items to cart...")
+                           .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialogInterface, int i) {
+                                   startActivity(new Intent(DetailsActivity.this,UpdateProfileActivity.class));
+                               }
+                           });
+                   builder.create().show();
+               }
+           }
+       });
+        CollectionReference userCartRef = db.collection(ALL_USERS_COLLECTION).document(user.getUid()).collection(USER_CART_COLLECTION);
+
+        userCartRef.document(cartItem.getCartItemId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+                    db.runTransaction(new Transaction.Function<Void>() {
+                        @Nullable
+                        @Override
+                        public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                            DocumentReference itemRef = db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(cartItem.getCartItemId());
+                            DocumentReference cartItemRef = userCartRef.document(cartItem.getCartItemId());
+
+                            DocumentSnapshot item = transaction.get(itemRef);
+                            if(cartItem.getQuantity()>item.getLong("available_amount")){
+                                showWarning();
+                                return null;
+                            }
+                            else{
+
+                                long newItemAmount = item.getLong("available_amount")-cartItem.getQuantity();
+                                transaction.update(itemRef,"available_amount",newItemAmount);
+
+                                DocumentSnapshot cartItemDoc = transaction.get(cartItemRef);
+                                long newQuantity = cartItemDoc.getLong("quantity")+cartItem.getQuantity();
+                                double newTotalPrice = newQuantity*cartItem.getSingleItemPrice();
+                                Map<String,Object> map = new HashMap<>();
+                                map.put("quantity",newQuantity);
+                                map.put("totalPrice",newTotalPrice);
+                                transaction.update(cartItemRef,map);
+
+                            }
+
+                            return null;
+                        }
+                    });
+                }
+                else {
+
+                    db.runTransaction(new Transaction.Function<Void>() {
+                        @Nullable
+                        @Override
+                        public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                            DocumentReference itemRef = db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(cartItem.getCartItemId());
+                            DocumentSnapshot item = transaction.get(itemRef);
+                            if(cartItem.getQuantity()>item.getLong("available_amount")){
+                                showWarning();
+                                return null;
+                            }
+                            else {
+
+                                long newItemAmount = item.getLong("available_amount") - cartItem.getQuantity();
+                                transaction.update(itemRef, "available_amount", newItemAmount);
+
+                            }
+                            return null;
+                        }
+                    });
+                    userCartRef.add(cartItem);
+                }
+            }
+        });
+    }
+
+    private void showWarning() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this)
+                .setTitle("Item Quantity exceeded!")
+                .setMessage("Please reduce item quantity...\n Very few left")
+                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        builder.create().show();
 
     }
 
