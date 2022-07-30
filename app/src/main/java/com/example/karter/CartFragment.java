@@ -16,14 +16,28 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 
 public class CartFragment extends Fragment   {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private static  final  String REVIEW_COLLECTION = "Reviews";
+    private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
+    private static final String ALL_USERS_COLLECTION = "Users";
+    private static final String USER_CART_COLLECTION = "Cart";
+
     private RelativeLayout if_empty , cart;
     private Button btn_start_shopping , btn_checkout;
     private RecyclerView cart_item_RV;
-    private  ArrayList<CartItem> myCart;
+    private  ArrayList<CartItem> myCart = new ArrayList<>();
     private TextView total_price, tax , delivery_charges , total_amount;
 
 
@@ -34,42 +48,62 @@ public class CartFragment extends Fragment   {
 
         initViews(view);
 
-        Bundle bundle = getArguments();
-        myCart=bundle.getParcelableArrayList("cart");
-
-        if (myCart==null){
-            if_empty.setVisibility(View.VISIBLE);
-            cart.setVisibility(View.GONE);
-
-            handleEmptyCart();
-
-        }
-        else{
-            if_empty.setVisibility(View.GONE);
-            cart.setVisibility(View.VISIBLE);
-
-            handleCart();
-            priceCalculation();
-            btn_checkout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putParcelableArrayList("address",Utils.getAllAddresses(getActivity()));
-
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    AllAddressesFragment allAddressesFragment = new AllAddressesFragment();
-                    allAddressesFragment.setArguments(bundle1);
-                    transaction.replace(R.id.cart_activity_fragment_container,allAddressesFragment);
-                    transaction.commit();
-                }
-            });
-        }
-
-
+        fillMyCart();
 
         return view;
     }
+
+    private void fillMyCart() {
+        CartItemAdapter adapter= new CartItemAdapter(getActivity());
+        adapter.setAllCartItems(myCart);
+        cart_item_RV.setAdapter(adapter);
+        cart_item_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+
+        db.collection(ALL_USERS_COLLECTION).document(user.getUid()).collection(USER_CART_COLLECTION)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()){
+                    myCart.clear();
+                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                        CartItem cartItem = doc.toObject(CartItem.class);
+                        myCart.add(cartItem);
+                    }
+                    if_empty.setVisibility(View.GONE);
+                    cart.setVisibility(View.VISIBLE);
+                    adapter.notifyDataSetChanged();
+                    priceCalculation();
+                    handleCheckout();
+
+                }
+                else{
+                    if_empty.setVisibility(View.VISIBLE);
+                    cart.setVisibility(View.GONE);
+
+                    handleEmptyCart();
+                }
+            }
+        });
+    }
+
+    private void handleCheckout() {
+
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle1 = new Bundle();
+                bundle1.putParcelableArrayList("address",Utils.getAllAddresses(getActivity()));
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                AllAddressesFragment allAddressesFragment = new AllAddressesFragment();
+                allAddressesFragment.setArguments(bundle1);
+                transaction.replace(R.id.cart_activity_fragment_container,allAddressesFragment);
+                transaction.commit();
+            }
+        });
+    }
+
     private  void  initViews(View view){
         if_empty = view.findViewById(R.id.if_empty_cart_RL);
         cart = view.findViewById(R.id.cart_RL);
@@ -95,20 +129,12 @@ public class CartFragment extends Fragment   {
         });
     }
 
-    private void handleCart(){
-
-        CartItemAdapter adapter= new CartItemAdapter(getActivity());
-        adapter.setAllCartItems(myCart);
-        cart_item_RV.setAdapter(adapter);
-        cart_item_RV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-
-    }
 
     private void priceCalculation(){
         double tp=0;
         double charges = 40;
         for (CartItem i : myCart){
-            tp+=i.getItem().getPrice()*i.getQuantity();
+            tp+=i.getTotalPrice();
         }
         double tx = tp*10.0/100.0;
 
