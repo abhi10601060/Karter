@@ -10,6 +10,9 @@ public class Address implements Parcelable {
     private String email;
     private String contactNo;
 
+    public Address() {
+    }
+
     protected Address(Parcel in) {
         name = in.readString();
         Address = in.readString();
