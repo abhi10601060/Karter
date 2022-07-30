@@ -9,6 +9,16 @@ public class Address implements Parcelable {
     private String zipCode;
     private String email;
     private String contactNo;
+    private String dbId;
+
+    public Address(String name, String address, String zipCode, String email, String contactNo) {
+        this.name = name;
+        Address = address;
+        this.zipCode = zipCode;
+        this.email = email;
+        this.contactNo = contactNo;
+        this.dbId = "";
+    }
 
     public Address() {
     }
@@ -19,6 +29,7 @@ public class Address implements Parcelable {
         zipCode = in.readString();
         email = in.readString();
         contactNo = in.readString();
+        dbId = in.readString();
     }
 
     public static final Creator<Address> CREATOR = new Creator<Address>() {
@@ -73,12 +84,12 @@ public class Address implements Parcelable {
         this.contactNo = contactNo;
     }
 
-    public Address(String name, String address, String zipCode, String email, String contactNo) {
-        this.name = name;
-        Address = address;
-        this.zipCode = zipCode;
-        this.email = email;
-        this.contactNo = contactNo;
+    public String getDbId() {
+        return dbId;
+    }
+
+    public void setDbId(String dbId) {
+        this.dbId = dbId;
     }
 
     @Override
@@ -93,5 +104,6 @@ public class Address implements Parcelable {
         parcel.writeString(zipCode);
         parcel.writeString(email);
         parcel.writeString(contactNo);
+        parcel.writeString(dbId);
     }
 }

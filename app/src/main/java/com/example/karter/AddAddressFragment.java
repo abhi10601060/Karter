@@ -102,6 +102,10 @@ public class AddAddressFragment extends Fragment {
                 if (task.isSuccessful()){
                     Toast.makeText(getActivity(), "Your Address Saved successfully...", Toast.LENGTH_SHORT).show();
 
+                    DocumentReference doc = task.getResult();
+                    String dbId = doc.getId();
+                    doc.update("dbId",dbId);
+
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     AllAddressesFragment allAddressesFragment = new AllAddressesFragment();
                     transaction.replace(R.id.cart_activity_fragment_container,allAddressesFragment);
