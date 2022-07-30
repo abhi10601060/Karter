@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CartActivity extends AppCompatActivity  implements  AddressAdapter.RemoveAddress , AddressAdapter.AddressSelected {
@@ -25,6 +26,7 @@ public class CartActivity extends AppCompatActivity  implements  AddressAdapter.
     private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
     private static final String ALL_USERS_COLLECTION = "Users";
     private static final String USER_CART_COLLECTION = "Cart";
+    private static final String USER_ADDRESS_COLLECTION = "Addresses";
 
     private MaterialToolbar toolbar;
     private BottomNavigationView bottomNavigationView;
@@ -139,14 +141,13 @@ public class CartActivity extends AppCompatActivity  implements  AddressAdapter.
 
     @Override
     public void onAddressRemoved(Address address) {
-        Utils.removeAddresses(this,address);
 
-        Bundle bundle =new Bundle();
-        bundle.putParcelableArrayList("address", Utils.getAllAddresses(this));
+        DocumentReference addressRef =db.collection(ALL_USERS_COLLECTION).document(user.getUid()).collection(USER_ADDRESS_COLLECTION)
+                .document(address.getDbId());
+        addressRef.delete();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         AllAddressesFragment allAddressesFragment = new AllAddressesFragment();
-        allAddressesFragment.setArguments(bundle);
         transaction.replace(R.id.cart_activity_fragment_container,allAddressesFragment);
         transaction.commit();
     }
