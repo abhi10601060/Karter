@@ -2,8 +2,16 @@ package com.example.karter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,6 +29,8 @@ public class Utils {
 
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    private static final String ALLGROCERYITEMS_COLLECTION = "AllGroceryItems";
+
     private static final String DB_NAME = "fake_database";
     private static  final  String ALL_ITEMS = "all_items";
     private static final String ALL_CART_ITEMS= "all_CartItems";
@@ -35,8 +45,23 @@ public class Utils {
 
 
     public static ArrayList<GroceryItem> getAllItems(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        ArrayList<GroceryItem> allItems= gson.fromJson(sharedPreferences.getString(ALL_ITEMS,null),groceryType);
+
+        ArrayList<GroceryItem> allItems = new ArrayList<>();
+
+        db.collection(ALLGROCERYITEMS_COLLECTION).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()){
+                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                        GroceryItem item = doc.toObject(GroceryItem.class);
+                        allItems.add(item);
+                        Log.d(TAG, "onSuccess: Item added from Firestore");
+                    }
+                }
+            }
+        });
+
+
         return allItems;
 
     }
@@ -180,101 +205,101 @@ public class Utils {
 
     }
 
-    public static ArrayList<CartItem> getAllCartItems(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        ArrayList<CartItem> allCartItems = gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
-        return allCartItems;
-    }
-    public static void addCartItem(Context context ,CartItem item){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        ArrayList<CartItem> allCartItems = gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
-
-        if (allCartItems==null){
-            ArrayList<CartItem> newCartItems = new ArrayList<>();
-            newCartItems.add(item);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
-            editor.commit();
-        }
-        else {
-            ArrayList<CartItem> newCartItems = new ArrayList<>();
-            boolean found = false;
-            for(CartItem i : allCartItems){
-                if (item.getItem().getName().equals(i.getItem().getName())){
-                    int newQuantity=i.getQuantity()+item.getQuantity();
-                    i.setQuantity(newQuantity);
-                    found=true;
-                }
-                newCartItems.add(i);
-            }
-            if (found==false){
-                newCartItems.add(item);
-            }
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
-            editor.commit();
-        }
-    }
-    public static void removeCartItem(Context context , CartItem item){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        ArrayList<CartItem> allCartItems = gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
-
-        ArrayList<CartItem> newCartItems = new ArrayList<>();
-        for (CartItem i : allCartItems){
-            if (!i.getItem().getName().equals(item.getItem().getName())){
-                newCartItems.add(i);
-            }
-        }
-        if (newCartItems.size()==0){
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(ALL_CART_ITEMS,null);
-            editor.commit();
-        }
-        else {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
-            editor.commit();
-        }
-
-    }
-    public static void addQuantity(Context context , CartItem item){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        ArrayList<CartItem> allCartItems= gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
-
-        ArrayList<CartItem> newCartItems = new ArrayList<>();
-
-        for (CartItem i : allCartItems){
-            if (item.getItem().getName().equals(i.getItem().getName())){
-                int newQuantity = i.getQuantity()+1;
-                i.setQuantity(newQuantity);
-            }
-            newCartItems.add(i);
-        }
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.remove(ALL_CART_ITEMS);
-        editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
-        editor.commit();
-    }
-    public static void reduceQuantity(Context context , CartItem item){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
-        ArrayList<CartItem> allCartItems= gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
-
-        ArrayList<CartItem> newCartItems = new ArrayList<>();
-
-        for (CartItem i : allCartItems){
-            if (item.getItem().getName().equals(i.getItem().getName())){
-                int newQuantity = i.getQuantity()-1;
-                i.setQuantity(newQuantity);
-            }
-            newCartItems.add(i);
-        }
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.remove(ALL_CART_ITEMS);
-        editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
-        editor.commit();
-    }
+//    public static ArrayList<CartItem> getAllCartItems(Context context){
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+//        ArrayList<CartItem> allCartItems = gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
+//        return allCartItems;
+//    }
+//    public static void addCartItem(Context context ,CartItem item){
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+//        ArrayList<CartItem> allCartItems = gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
+//
+//        if (allCartItems==null){
+//            ArrayList<CartItem> newCartItems = new ArrayList<>();
+//            newCartItems.add(item);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
+//            editor.commit();
+//        }
+//        else {
+//            ArrayList<CartItem> newCartItems = new ArrayList<>();
+//            boolean found = false;
+//            for(CartItem i : allCartItems){
+//                if (item.getItem().getName().equals(i.getItem().getName())){
+//                    int newQuantity=i.getQuantity()+item.getQuantity();
+//                    i.setQuantity(newQuantity);
+//                    found=true;
+//                }
+//                newCartItems.add(i);
+//            }
+//            if (found==false){
+//                newCartItems.add(item);
+//            }
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
+//            editor.commit();
+//        }
+//    }
+//    public static void removeCartItem(Context context , CartItem item){
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+//        ArrayList<CartItem> allCartItems = gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
+//
+//        ArrayList<CartItem> newCartItems = new ArrayList<>();
+//        for (CartItem i : allCartItems){
+//            if (!i.getItem().getName().equals(item.getItem().getName())){
+//                newCartItems.add(i);
+//            }
+//        }
+//        if (newCartItems.size()==0){
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putString(ALL_CART_ITEMS,null);
+//            editor.commit();
+//        }
+//        else {
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
+//            editor.commit();
+//        }
+//
+//    }
+//    public static void addQuantity(Context context , CartItem item){
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+//        ArrayList<CartItem> allCartItems= gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
+//
+//        ArrayList<CartItem> newCartItems = new ArrayList<>();
+//
+//        for (CartItem i : allCartItems){
+//            if (item.getItem().getName().equals(i.getItem().getName())){
+//                int newQuantity = i.getQuantity()+1;
+//                i.setQuantity(newQuantity);
+//            }
+//            newCartItems.add(i);
+//        }
+//
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+////        editor.remove(ALL_CART_ITEMS);
+//        editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
+//        editor.commit();
+//    }
+//    public static void reduceQuantity(Context context , CartItem item){
+//        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);
+//        ArrayList<CartItem> allCartItems= gson.fromJson(sharedPreferences.getString(ALL_CART_ITEMS,null),cartItemType);
+//
+//        ArrayList<CartItem> newCartItems = new ArrayList<>();
+//
+//        for (CartItem i : allCartItems){
+//            if (item.getItem().getName().equals(i.getItem().getName())){
+//                int newQuantity = i.getQuantity()-1;
+//                i.setQuantity(newQuantity);
+//            }
+//            newCartItems.add(i);
+//        }
+//
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+////        editor.remove(ALL_CART_ITEMS);
+//        editor.putString(ALL_CART_ITEMS, gson.toJson(newCartItems));
+//        editor.commit();
+//    }
 
     public static ArrayList<Address> getAllAddresses(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME,Context.MODE_PRIVATE);

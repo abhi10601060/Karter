@@ -46,7 +46,7 @@ public class AllProducts extends AppCompatActivity {
         setContentView(R.layout.activity_all_products);
 
         initViews();
-        Utils.initSharedPreferences(this);
+
 
         setSupportActionBar(toolbar);
 

@@ -14,6 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.util.Util;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,11 +37,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PaymentFragment extends Fragment {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private static  final  String REVIEW_COLLECTION = "Reviews";
+    private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
+    private static final String ALL_USERS_COLLECTION = "Users";
+    private static final String USER_CART_COLLECTION = "Cart";
+
+
     private TextView name, item_list,address , contact_details,total_amount;
     private Button btn_place_order;
     private RadioGroup payment_rg;
     private String payment_method = null;
     private  Address incomingAddress;
+    private ArrayList<CartItem> myCart;
 
 
 
@@ -53,14 +70,14 @@ public class PaymentFragment extends Fragment {
                 address.setText(incomingAddress.getAddress()+" - "+incomingAddress.getZipCode());
                 contact_details.setText(incomingAddress.getContactNo()+" / "+incomingAddress.getEmail());
 
-                ArrayList<CartItem> myCart = Utils.getAllCartItems(getActivity());
+              myCart = getAllCartItems();
 
                 double total = 0;
                 int idx =1;
                 for (CartItem i : myCart){
                     item_list.setText(item_list.getText()+"\n"+
-                            idx+". "+ i.getItem().getName()+"  (x"+i.getQuantity()+")");
-                    total+=i.getItem().getPrice()*i.getQuantity();
+                            idx+". "+ i.getItemName()+"  (x"+i.getQuantity()+")");
+                    total+=i.getTotalPrice();
                     idx++;
                 }
                 double delivery_charge=40;
@@ -117,7 +134,8 @@ public class PaymentFragment extends Fragment {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 String date = simpleDateFormat.format(calendar.getTime());
-                Order order = new Order(Utils.getAllCartItems(getActivity()),incomingAddress,payment_method,date);
+
+                Order order = new Order(myCart,incomingAddress,payment_method,date);
 
                 HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor()
                         .setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -152,12 +170,24 @@ public class PaymentFragment extends Fragment {
 
                             Bundle bundle = new Bundle();
                             bundle.putString("order_key" , "success");
-                            ArrayList<CartItem> cartItems = Utils.getAllCartItems(getActivity());
+                            ArrayList<CartItem> cartItems =myCart;
+//
+//                            for(CartItem i : cartItems){
+//                                Utils.increasePopularity(getActivity(),i.getItem());
+//                            }
+//                            Utils.clearCart(getActivity());
+                            // TODO: 30-07-2022 emptying the cart here....
+                           db.collection(ALL_USERS_COLLECTION).document(user.getUid())
+                                    .collection(USER_CART_COLLECTION).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            for (QueryDocumentSnapshot doc :queryDocumentSnapshots){
+                                                DocumentReference item =doc.getReference();
+                                                item.delete();
+                                            }
+                                        }
+                                    });
 
-                            for(CartItem i : cartItems){
-                                Utils.increasePopularity(getActivity(),i.getItem());
-                            }
-                            Utils.clearCart(getActivity());
 
                             OrderSuccessFragment fragment = new OrderSuccessFragment();
                             fragment.setArguments(bundle);
@@ -183,5 +213,23 @@ public class PaymentFragment extends Fragment {
 
             }
         });
+    }
+
+    private ArrayList<CartItem> getAllCartItems() {
+        ArrayList<CartItem> cart = new ArrayList<>();
+
+        db.collection(ALL_USERS_COLLECTION).document(user.getUid()).collection(USER_CART_COLLECTION)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (queryDocumentSnapshots!=null){
+                    for(QueryDocumentSnapshot doc :queryDocumentSnapshots){
+                        CartItem item = doc.toObject(CartItem.class);
+                        cart.add(item);
+                    }
+                }
+            }
+        });
+        return cart;
     }
 }

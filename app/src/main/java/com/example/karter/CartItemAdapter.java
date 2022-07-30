@@ -50,14 +50,14 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.cart_item_name.setText(allCartItems.get(position).getItem().getName());
-        holder.price.setText("\u20B9"+allCartItems.get(position).getItem().getPrice());
-        holder.total_price.setText("\u20B9"+allCartItems.get(position).getItem().getPrice()*allCartItems.get(position).getQuantity());
+        holder.cart_item_name.setText(allCartItems.get(position).getItemName());
+        holder.price.setText("\u20B9"+allCartItems.get(position).getSingleItemPrice());
+        holder.total_price.setText("\u20B9"+allCartItems.get(position).getTotalPrice());
         holder.quantity.setText(allCartItems.get(position).getQuantity()+"");
 
         Glide.with(context)
                 .asBitmap()
-                .load(allCartItems.get(holder.getAdapterPosition()).getItem().getImageUrl())
+                .load(allCartItems.get(holder.getAdapterPosition()).getImageUrl())
                 .into(holder.item_img);
 
         holder.cross.setOnClickListener(new View.OnClickListener() {

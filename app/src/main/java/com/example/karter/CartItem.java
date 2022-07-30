@@ -9,15 +9,19 @@ public class CartItem   {
     private int quantity;
     private double singleItemPrice;
     private double totalPrice ;
+    private String itemName;
+    private String imageUrl;
 
-    public CartItem() {
-    }
-
-    public CartItem(String cartItemId, int quantity, double singleItemPrice, double totalPrice) {
+    public CartItem(String cartItemId, int quantity, double singleItemPrice, double totalPrice, String itemName, String imageUrl) {
         this.cartItemId = cartItemId;
         this.quantity = quantity;
         this.singleItemPrice = singleItemPrice;
         this.totalPrice = totalPrice;
+        this.itemName = itemName;
+        this.imageUrl = imageUrl;
+    }
+
+    public CartItem() {
     }
 
     public String getCartItemId() {
@@ -50,5 +54,21 @@ public class CartItem   {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

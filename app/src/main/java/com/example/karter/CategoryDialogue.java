@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class CategoryDialogue extends DialogFragment {
 
-
     public  interface CategorySelected{
         void onCategorySelectedResult(String category);
     }
@@ -36,6 +35,7 @@ public class CategoryDialogue extends DialogFragment {
                 .setView(view);
 
         ArrayList<String> allCategories = Utils.getAllCategories();
+        // TODO: 28-07-2022 add persistent allCategories array somewhere...
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,allCategories);
         categories_list = view.findViewById(R.id.category_dialogue_list);

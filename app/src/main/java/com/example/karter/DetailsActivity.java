@@ -59,6 +59,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
     private ReviewAdapter reviewAdapter = new ReviewAdapter(this);
 
     private int amount = 1;
+    private double total_amount;
 
     private GroceryItem incomingItem;
     private GroceryItem dummy;
@@ -117,7 +118,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
         quantity.setText(""+ amount);
 
-        double total_amount = incomingItem.getPrice() * this.amount;
+        total_amount = incomingItem.getPrice() * this.amount;
         total_price.setText(""+total_amount);
 
         plus.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +126,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
             public void onClick(View view) {
                 amount++;
                 quantity.setText(""+ amount);
-                double total_amount = incomingItem.getPrice() * amount;
+                total_amount = incomingItem.getPrice() * amount;
                 total_price.setText(""+total_amount);
             }
         });
@@ -137,7 +138,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                 if(amount>1){
                     amount--;
                     quantity.setText(""+ amount);
-                    double total_amount = incomingItem.getPrice() * amount;
+                    total_amount = incomingItem.getPrice() * amount;
                     total_price.setText(""+total_amount);
                 }
             }
@@ -149,9 +150,9 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
         add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CartItem cartItem  = new CartItem(DocId,amount,incomingItem.getPrice(),total_amount);
-                addCartItemToFirestore(cartItem);
-                Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
+                CartItem cartItem  = new CartItem(DocId,amount,incomingItem.getPrice(),total_amount,incomingItem.getName(),incomingItem.getImageUrl());
+                checkUserCartExist(cartItem);
+                Log.d(TAG, "onClick: add to cart clickedd//.....");
             }
         });
         handleRating();
@@ -161,26 +162,8 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
     private void addCartItemToFirestore(CartItem cartItem) {
 
-       DocumentReference userDoc = db.collection(ALL_USERS_COLLECTION).document(user.getUid());
-       userDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-           @Override
-           public void onSuccess(DocumentSnapshot documentSnapshot) {
-               if (!documentSnapshot.exists()){
-                   AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this)
-                           .setTitle("Complete Profile")
-                           .setMessage("Please complete your profile before adding items to cart...")
-                           .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                               @Override
-                               public void onClick(DialogInterface dialogInterface, int i) {
-                                   startActivity(new Intent(DetailsActivity.this,UpdateProfileActivity.class));
-                               }
-                           });
-                   builder.create().show();
-               }
-           }
-       });
+        Log.d(TAG, "addCartItemToFirestore: Adding to cart");
         CollectionReference userCartRef = db.collection(ALL_USERS_COLLECTION).document(user.getUid()).collection(USER_CART_COLLECTION);
-
         userCartRef.document(cartItem.getCartItemId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -211,7 +194,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                                 transaction.update(cartItemRef,map);
 
                             }
-
+                            Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
                             return null;
                         }
                     });
@@ -238,9 +221,37 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                         }
                     });
                     userCartRef.add(cartItem);
+                    Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void checkUserCartExist(CartItem cartItem) {
+
+
+        db.collection(ALL_USERS_COLLECTION).document(user.getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (!documentSnapshot.exists()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this)
+                            .setTitle("Complete Profile")
+                            .setMessage("Please complete your profile before adding items to cart...")
+                            .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(DetailsActivity.this,UpdateProfileActivity.class));
+                                }
+                            });
+                    builder.create().show();
+                }
+                else{
+                    addCartItemToFirestore(cartItem);
+                }
+            }
+        });
+
     }
 
     private void showWarning() {

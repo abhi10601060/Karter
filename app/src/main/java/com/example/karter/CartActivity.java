@@ -13,8 +13,18 @@ import android.widget.Switch;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete , CartItemAdapter.ChangeQuantity, AddressAdapter.RemoveAddress , AddressAdapter.AddressSelected {
+public class CartActivity extends AppCompatActivity  implements  AddressAdapter.RemoveAddress , AddressAdapter.AddressSelected {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private static  final  String REVIEW_COLLECTION = "Reviews";
+    private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
+    private static final String ALL_USERS_COLLECTION = "Users";
+    private static final String USER_CART_COLLECTION = "Cart";
 
     private MaterialToolbar toolbar;
     private BottomNavigationView bottomNavigationView;
@@ -34,10 +44,10 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
 
         CartFragment cartFragment = new CartFragment();
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
-
-        cartFragment.setArguments(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
+//
+//        cartFragment.setArguments(bundle);
 
         transaction.replace(R.id.cart_activity_fragment_container,cartFragment);
         transaction.commit();
@@ -78,54 +88,54 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
         });
     }
 
-    @Override
-    public void onDeleteCartItemResult(CartItem item) {
-        Utils.removeCartItem(this,item);
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
-
-        CartFragment fragment = new CartFragment();
-        fragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.cart_activity_fragment_container,fragment);
-        transaction.commit();
-
-
-    }
-
-    @Override
-    public void onQuantityAdded(CartItem item) {
-        Utils.addQuantity(this,item);
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
-
-
-        CartFragment fragment = new CartFragment();
-        fragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.cart_activity_fragment_container,fragment);
-        transaction.commit();
-    }
-
-    @Override
-    public void onQuantityReduced(CartItem item) {
-        Utils.reduceQuantity(this, item);
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("cart", Utils.getAllCartItems(this));
-
-        CartFragment fragment = new CartFragment();
-        fragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.cart_activity_fragment_container,fragment);
-        transaction.commit();
-
-    }
+//    @Override
+//    public void onDeleteCartItemResult(CartItem item) {
+//        Utils.removeCartItem(this,item);
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
+//
+//        CartFragment fragment = new CartFragment();
+//        fragment.setArguments(bundle);
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.cart_activity_fragment_container,fragment);
+//        transaction.commit();
+//
+//
+//    }
+//
+//    @Override
+//    public void onQuantityAdded(CartItem item) {
+//        Utils.addQuantity(this,item);
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
+//
+//
+//        CartFragment fragment = new CartFragment();
+//        fragment.setArguments(bundle);
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.cart_activity_fragment_container,fragment);
+//        transaction.commit();
+//    }
+//
+//    @Override
+//    public void onQuantityReduced(CartItem item) {
+//        Utils.reduceQuantity(this, item);
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelableArrayList("cart", Utils.getAllCartItems(this));
+//
+//        CartFragment fragment = new CartFragment();
+//        fragment.setArguments(bundle);
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.cart_activity_fragment_container,fragment);
+//        transaction.commit();
+//
+//    }
 
     @Override
     public void onAddressRemoved(Address address) {

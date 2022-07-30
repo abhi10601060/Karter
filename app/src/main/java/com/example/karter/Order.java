@@ -22,7 +22,6 @@ public class Order implements Parcelable {
 
 
     protected Order(Parcel in) {
-        cartItems = in.createTypedArrayList(CartItem.CREATOR);
         address = in.readParcelable(Address.class.getClassLoader());
         paymentMethod = in.readString();
         date = in.readString();
@@ -72,6 +71,7 @@ public class Order implements Parcelable {
         this.date = date;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,9 +79,9 @@ public class Order implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeTypedList(cartItems);
         parcel.writeParcelable(address, i);
         parcel.writeString(paymentMethod);
         parcel.writeString(date);
     }
+
 }
