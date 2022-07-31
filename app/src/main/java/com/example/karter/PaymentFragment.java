@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -43,15 +44,16 @@ public class PaymentFragment extends Fragment {
     private static final String ALL_GROCERY_ITEMS_COLLECTION = "AllGroceryItems";
     private static final String ALL_USERS_COLLECTION = "Users";
     private static final String USER_CART_COLLECTION = "Cart";
+    private static  final String USERS_HISTORY_COLLECTION = "OrderHistory";
 
 
-    private TextView name, item_list,address , contact_details,total_amount;
+    private TextView name, item_list,address , contact_details,total_amount,description_edt;
     private Button btn_place_order;
     private RadioGroup payment_rg;
     private String payment_method = null;
     private  Address incomingAddress;
     private ArrayList<CartItem> myCart;
-
+    private double total;
 
 
     @Nullable
@@ -63,7 +65,6 @@ public class PaymentFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle!= null){
              incomingAddress = bundle.getParcelable("payment_address");
-
             if (address!=null){
 
                 name.setText(incomingAddress.getName());
@@ -72,27 +73,9 @@ public class PaymentFragment extends Fragment {
 
               myCart = getAllCartItems();
 
-                double total = 0;
-                int idx =1;
-                for (CartItem i : myCart){
-                    item_list.setText(item_list.getText()+"\n"+
-                            idx+". "+ i.getItemName()+"  (x"+i.getQuantity()+")");
-                    total+=i.getTotalPrice();
-                    idx++;
-                }
-                double delivery_charge=40;
-                double tax = total*10.0/100.0;
-
-                total=total+delivery_charge+tax;
-
-                total_amount.setText("\u20B9"+total);
 
                 handlePlaceOrder();
-
-
             }
-
-
 
         }
         return view;
@@ -108,7 +91,7 @@ public class PaymentFragment extends Fragment {
         btn_place_order=view.findViewById(R.id.payment_fragment_btn_place_order);
 
         payment_rg= view.findViewById(R.id.payment_radio_grp);
-
+        description_edt = view.findViewById(R.id.payment_fragment_description_edt);
     }
 
     private void handlePlaceOrder(){
@@ -132,10 +115,9 @@ public class PaymentFragment extends Fragment {
                         break;
                 }
                 Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                String date = simpleDateFormat.format(calendar.getTime());
-
-                Order order = new Order(myCart,incomingAddress,payment_method,date);
+                Date date = calendar.getTime();
+                String description =description_edt.getText().toString();
+                Order order = new Order(myCart,incomingAddress,description,total,payment_method,date);
 
                 HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor()
                         .setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -168,27 +150,22 @@ public class PaymentFragment extends Fragment {
                         }
                         else {
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString("order_key" , "success");
-                            ArrayList<CartItem> cartItems =myCart;
-//
-//                            for(CartItem i : cartItems){
-//                                Utils.increasePopularity(getActivity(),i.getItem());
-//                            }
-//                            Utils.clearCart(getActivity());
-                            // TODO: 30-07-2022 emptying the cart here....
-                           db.collection(ALL_USERS_COLLECTION).document(user.getUid())
-                                    .collection(USER_CART_COLLECTION).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            db.collection(ALL_USERS_COLLECTION).document(user.getUid())
+                                    .collection(USERS_HISTORY_COLLECTION).add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    String id =documentReference.getId();
+                                    documentReference.update("orderId",id).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
-                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            for (QueryDocumentSnapshot doc :queryDocumentSnapshots){
-                                                DocumentReference item =doc.getReference();
-                                                item.delete();
-                                            }
+                                        public void onSuccess(Void unused) {
+                                            clearCart();
                                         }
                                     });
+                                }
+                            });
 
-
+                            Bundle bundle = new Bundle();
+                            bundle.putString("order_key" , "success");
                             OrderSuccessFragment fragment = new OrderSuccessFragment();
                             fragment.setArguments(bundle);
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -198,19 +175,26 @@ public class PaymentFragment extends Fragment {
                         }
 
                     }
-
                     @Override
                     public void onFailure(Call<Order> call, Throwable t) {
                         t.printStackTrace();
                     }
                 });
 
+            }
+        });
+    }
 
-
-
-
-
-
+    private void clearCart() {
+        // TODO: 30-07-2022 emptying the cart here....
+        db.collection(ALL_USERS_COLLECTION).document(user.getUid())
+                .collection(USER_CART_COLLECTION).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot doc :queryDocumentSnapshots){
+                    DocumentReference item =doc.getReference();
+                    item.delete();
+                }
             }
         });
     }
@@ -227,9 +211,22 @@ public class PaymentFragment extends Fragment {
                         CartItem item = doc.toObject(CartItem.class);
                         cart.add(item);
                     }
+                    total = 0;
+                    int idx =1;
+                    for (CartItem i : cart){
+                        item_list.setText(item_list.getText()+"\n"+
+                                idx+". "+ i.getItemName()+"  (x"+i.getQuantity()+")");
+                        total+=i.getTotalPrice();
+                        idx++;
+                    }
+                    double delivery_charge=40;
+                    double tax = total*10.0/100.0;
+                    total=total+delivery_charge+tax;
+                    total_amount.setText("\u20B9"+total);
                 }
             }
         });
+
         return cart;
     }
 }

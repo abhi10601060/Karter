@@ -4,27 +4,37 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order implements Parcelable {
 
+    private String orderId;
     private ArrayList<CartItem> cartItems;
     private Address address;
+    private String description;
+    private double totalAmount;
     private String paymentMethod;
-    private String date;
+    private Date date;
 
-
-    public Order(ArrayList<CartItem> cartItems, Address address, String paymentMethod, String date) {
+    public Order(ArrayList<CartItem> cartItems, Address address, String description, double totalAmount, String paymentMethod, Date date) {
+        this.orderId = "";
         this.cartItems = cartItems;
         this.address = address;
+        this.description = description;
+        this.totalAmount = totalAmount;
         this.paymentMethod = paymentMethod;
         this.date = date;
     }
 
+    public Order() {
+    }
 
     protected Order(Parcel in) {
+        orderId = in.readString();
         address = in.readParcelable(Address.class.getClassLoader());
+        description = in.readString();
+        totalAmount = in.readDouble();
         paymentMethod = in.readString();
-        date = in.readString();
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
@@ -38,6 +48,14 @@ public class Order implements Parcelable {
             return new Order[size];
         }
     };
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public ArrayList<CartItem> getCartItems() {
         return cartItems;
@@ -55,6 +73,22 @@ public class Order implements Parcelable {
         this.address = address;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
     public String getPaymentMethod() {
         return paymentMethod;
     }
@@ -63,14 +97,13 @@ public class Order implements Parcelable {
         this.paymentMethod = paymentMethod;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
-
 
     @Override
     public int describeContents() {
@@ -79,9 +112,10 @@ public class Order implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(orderId);
         parcel.writeParcelable(address, i);
+        parcel.writeString(description);
+        parcel.writeDouble(totalAmount);
         parcel.writeString(paymentMethod);
-        parcel.writeString(date);
     }
-
 }
