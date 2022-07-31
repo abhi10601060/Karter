@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -164,7 +165,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
 
         Log.d(TAG, "addCartItemToFirestore: Adding to cart");
         CollectionReference userCartRef = db.collection(ALL_USERS_COLLECTION).document(user.getUid()).collection(USER_CART_COLLECTION);
-        userCartRef.document(cartItem.getCartItemId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        userCartRef.document(cartItem.getItemName()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()){
@@ -172,30 +173,42 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                         @Nullable
                         @Override
                         public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                            Log.d(TAG, "apply: running update transaction.....");
                             DocumentReference itemRef = db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(cartItem.getCartItemId());
-                            DocumentReference cartItemRef = userCartRef.document(cartItem.getCartItemId());
+                            DocumentReference cartItemRef = userCartRef.document(cartItem.getItemName());
 
                             DocumentSnapshot item = transaction.get(itemRef);
-                            if(cartItem.getQuantity()>item.getLong("available_amount")){
-                                showWarning();
-                                return null;
+                            long available = item.getLong("available_amount");
+
+                            if(cartItem.getQuantity()>available){
+                                Log.d(TAG, "apply: firing firestore exception");
+                                throw new FirebaseFirestoreException("Available amount exceeded", FirebaseFirestoreException.Code.ABORTED);
                             }
-                            else{
 
-                                long newItemAmount = item.getLong("available_amount")-cartItem.getQuantity();
-                                transaction.update(itemRef,"available_amount",newItemAmount);
+                            long newItemAmount = available-cartItem.getQuantity();
 
-                                DocumentSnapshot cartItemDoc = transaction.get(cartItemRef);
-                                long newQuantity = cartItemDoc.getLong("quantity")+cartItem.getQuantity();
-                                double newTotalPrice = newQuantity*cartItem.getSingleItemPrice();
-                                Map<String,Object> map = new HashMap<>();
-                                map.put("quantity",newQuantity);
-                                map.put("totalPrice",newTotalPrice);
-                                transaction.update(cartItemRef,map);
+                            DocumentSnapshot cartItemDoc = transaction.get(cartItemRef);
+                            long newQuantity = cartItemDoc.getLong("quantity")+cartItem.getQuantity();
+                            double newTotalPrice = newQuantity*cartItem.getSingleItemPrice();
 
-                            }
-                            Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
+                            Map<String,Object> map = new HashMap<>();
+                            map.put("quantity",newQuantity);
+                            map.put("totalPrice",newTotalPrice);
+
+                            transaction.update(cartItemRef,map);
+                            transaction.update(itemRef,"available_amount",newItemAmount);
                             return null;
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "onFailure: "+e.getMessage());
+                            showWarning();
                         }
                     });
                 }
@@ -208,8 +221,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                             DocumentReference itemRef = db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(cartItem.getCartItemId());
                             DocumentSnapshot item = transaction.get(itemRef);
                             if(cartItem.getQuantity()>item.getLong("available_amount")){
-                                showWarning();
-                                return null;
+                                throw  new FirebaseFirestoreException("Available amount exceeded", FirebaseFirestoreException.Code.ABORTED);
                             }
                             else {
 
@@ -219,9 +231,25 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
                             }
                             return null;
                         }
+                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            userCartRef.document(cartItem.getItemName()).set(cartItem).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "onFailure: update failed");
+                            showWarning();
+                        }
                     });
-                    userCartRef.add(cartItem);
-                    Toast.makeText(DetailsActivity.this, "Item Added To Cart Successfully...", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -255,6 +283,7 @@ public class DetailsActivity extends AppCompatActivity  implements ReviewDialogu
     }
 
     private void showWarning() {
+        Log.d(TAG, "showWarning: running");
         AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this)
                 .setTitle("Item Quantity exceeded!")
                 .setMessage("Please reduce item quantity...\n Very few left")
