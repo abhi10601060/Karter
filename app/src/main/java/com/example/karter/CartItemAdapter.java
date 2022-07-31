@@ -96,7 +96,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                 try {
                     ChangeQuantity changeQuantity = (ChangeQuantity) context;
                     changeQuantity.onQuantityAdded(allCartItems.get(holder.getAdapterPosition()));
-                    notifyDataSetChanged();
                 }
                 catch (ClassCastException e){
                     e.printStackTrace();
