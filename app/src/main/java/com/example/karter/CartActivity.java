@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,7 +30,7 @@ import com.google.firebase.firestore.Transaction;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CartActivity extends AppCompatActivity  implements CartItemAdapter.ChangeQuantity, AddressAdapter.RemoveAddress , AddressAdapter.AddressSelected {
+public class CartActivity extends AppCompatActivity  implements CartItemAdapter.CartItemDelete, CartItemAdapter.ChangeQuantity, AddressAdapter.RemoveAddress , AddressAdapter.AddressSelected {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -101,23 +102,44 @@ public class CartActivity extends AppCompatActivity  implements CartItemAdapter.
         });
     }
 
-//    @Override
-//    public void onDeleteCartItemResult(CartItem item) {
-//        Utils.removeCartItem(this,item);
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelableArrayList("cart",Utils.getAllCartItems(this));
-//
-//        CartFragment fragment = new CartFragment();
-//        fragment.setArguments(bundle);
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.cart_activity_fragment_container,fragment);
-//        transaction.commit();
-//
-//
-//    }
-//
+    @Override
+    public void onDeleteCartItemResult(CartItem item) {
+
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+
+                DocumentReference groceryItemRef =db.collection(ALL_GROCERY_ITEMS_COLLECTION).document(item.getCartItemId());
+                DocumentReference cartItemRef = db.collection(ALL_USERS_COLLECTION).document(user.getUid()).collection(USER_CART_COLLECTION).document(item.getItemName());
+
+                DocumentSnapshot groceryItem = transaction.get(groceryItemRef);
+                DocumentSnapshot cartItem = transaction.get(cartItemRef);
+
+                long cartItemQuantity = cartItem.getLong("quantity");
+                long newAvailableAmount = groceryItem.getLong("available_amount") + cartItemQuantity;
+
+                transaction.update(groceryItemRef,"available_amount",newAvailableAmount);
+                transaction.delete(cartItemRef);
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                CartFragment fragment = new CartFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.cart_activity_fragment_container,fragment);
+                transaction.commit();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(CartActivity.this, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     @Override
     public void onQuantityAdded(CartItem item) {
 
