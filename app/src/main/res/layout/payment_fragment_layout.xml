@@ -6,7 +6,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/payment_btn_RL">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -49,15 +50,16 @@
                 android:layout_marginTop="5dp"
                 android:text="Actual name"
                 android:textSize="15dp" />
+
             <TextView
+                android:id="@+id/payment_fragment_txt_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/payment_fragment_name"
+                android:layout_marginTop="5dp"
                 android:text="Your Address :"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/payment_fragment_name"
-                android:id="@+id/payment_fragment_txt_address"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/payment_fragment_address"
@@ -70,112 +72,133 @@
                 android:textSize="15dp" />
 
             <TextView
+                android:id="@+id/payment_fragment_txt_contact_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/payment_fragment_address"
+                android:layout_marginTop="5dp"
                 android:text="Contact Details :"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/payment_fragment_address"
-                android:id="@+id/payment_fragment_txt_contact_details"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Actual Contact Details"
-                android:layout_below="@id/payment_fragment_txt_contact_details"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:textSize="15dp"
-                android:id="@+id/payment_fragment_contact_details"
-                />
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/payment_fragment_contact_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/payment_fragment_txt_contact_details"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="Actual Contact Details"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/payment_fragment_txt_payment_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/payment_fragment_contact_details"
+                android:layout_marginTop="15dp"
                 android:text="Payment Options :"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/payment_fragment_contact_details"
-                android:id="@+id/payment_fragment_txt_payment_options"/>
+                android:textStyle="bold" />
 
             <RadioGroup
+                android:id="@+id/payment_radio_grp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_below="@+id/payment_fragment_txt_payment_options"
-
-                android:id="@+id/payment_radio_grp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Debit / Credit card"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
-                    android:drawableEnd="@drawable/ic_plus_icon"
-                    android:paddingEnd="10dp"
                     android:id="@+id/payment_card_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:checked="true"
-                    />
+                    android:drawableEnd="@drawable/ic_plus_icon"
+                    android:paddingEnd="10dp"
+                    android:text="Debit / Credit card"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/background_theme"/>
+                    android:background="@color/background_theme" />
 
 
                 <RadioButton
+                    android:id="@+id/payment_upi_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_plus_icon"
+                    android:paddingEnd="10dp"
                     android:text="UPI"
-                    android:textSize="16dp"
                     android:textColor="@color/black"
-                    android:drawableEnd="@drawable/ic_plus_icon"
-                    android:paddingEnd="10dp"
-                    android:id="@+id/payment_upi_btn"/>
+                    android:textSize="16dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/background_theme"/>
+                    android:background="@color/background_theme" />
 
 
                 <RadioButton
+                    android:id="@+id/payment_net_banking_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_plus_icon"
+                    android:paddingEnd="10dp"
                     android:text="Net Banking"
-                    android:textSize="16dp"
                     android:textColor="@color/black"
-                    android:drawableEnd="@drawable/ic_plus_icon"
-                    android:paddingEnd="10dp"
-                    android:id="@+id/payment_net_banking_btn"/>
+                    android:textSize="16dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/background_theme"/>
+                    android:background="@color/background_theme" />
 
                 <RadioButton
+                    android:id="@+id/payment_cod_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cash On Delivery"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
                     android:drawableEnd="@drawable/ic_plus_icon"
                     android:paddingEnd="10dp"
-                    android:id="@+id/payment_cod_btn"/>
+                    android:text="Cash On Delivery"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/background_theme"/>
+                    android:background="@color/background_theme" />
 
 
             </RadioGroup>
 
+            <TextView
+                android:id="@+id/payment_fragment_txt_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/payment_radio_grp"
+                android:layout_marginTop="10dp"
+                android:text="Order Description :"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
+            <EditText
+                android:id="@+id/payment_fragment_description_edt"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/payment_fragment_txt_description"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="left"
+                android:hint="Add your Order Description here..."
+                android:lines="3"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp" />
 
         </RelativeLayout>
 
