@@ -29,6 +29,7 @@ public class Order implements Parcelable {
     public Order() {
     }
 
+
     protected Order(Parcel in) {
         orderId = in.readString();
         address = in.readParcelable(Address.class.getClassLoader());
@@ -104,6 +105,7 @@ public class Order implements Parcelable {
     public void setDate(Date date) {
         this.date = date;
     }
+
 
     @Override
     public int describeContents() {

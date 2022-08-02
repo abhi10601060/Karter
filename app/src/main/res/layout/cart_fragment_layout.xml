@@ -55,7 +55,6 @@
             android:id="@+id/checkout_btn"/>
 
 
-
         <RelativeLayout
             android:id="@+id/price_RL"
             android:layout_width="match_parent"

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Karter">
         <activity
+            android:name=".DetailOrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".OrderHistoryActivity"
             android:exported="false" />
         <activity

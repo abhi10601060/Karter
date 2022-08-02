@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailOrderActivity"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Details"
+        android:textSize="27dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:id="@+id/Order_detail_txt"/>
+
+    <TextView
+        android:id="@+id/order_detail_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Order_detail_txt"
+        android:layout_marginTop="15dp"
+        android:text="This was for a Fun"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/order_detail_date_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_detail_description"
+        android:layout_marginTop="0dp"
+        android:text="Jan 20,2020 | 20.45"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delivered"
+        android:layout_below="@+id/Order_detail_txt"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:id="@+id/order_detail_deliver_txt"/>
+
+    <View
+        android:id="@+id/order_details_top_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/order_detail_date_txt"
+        android:layout_marginTop="10dp"
+        android:background="@color/background_theme" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/order_details_price_RL"
+        android:layout_below="@id/order_details_top_line"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <TextView
+                android:id="@+id/order_details_txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recipient Name :"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/order_details_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_details_txt_name"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="Actual name"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/order_details_txt_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/order_details_name"
+                android:layout_marginTop="5dp"
+                android:text="Delivered to :"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/order_details_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_details_txt_address"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="Actual Address"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/order_details_txt_contact_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/order_details_address"
+                android:layout_marginTop="5dp"
+                android:text="Contact Details :"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/order_details_contact_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_details_txt_contact_details"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="Actual Contact Details"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/order_details_txt_payment_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/order_details_contact_details"
+                android:layout_marginTop="5dp"
+                android:text="Payment Method :"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/order_details_payment_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_details_txt_payment_options"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="Cash on delivery"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <View
+                android:id="@+id/order_details_middle_line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@+id/order_details_payment_option"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_theme" />
+
+            <TextView
+                android:id="@+id/order_details_txt_List"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/order_details_middle_line"
+                android:layout_marginTop="10dp"
+                android:text="List of Items :"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/order_list_RV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/order_details_txt_List" />
+
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/order_details_price_RL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/price_details_background"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/order_details_txt_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Price :" />
+
+        <TextView
+            android:id="@+id/order_details_txt_delivery_charges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_details_txt_total_price"
+            android:layout_marginTop="3dp"
+            android:text="Delivery Charges :" />
+
+        <TextView
+            android:id="@+id/order_details_txt_tax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_details_txt_delivery_charges"
+            android:layout_marginTop="3dp"
+            android:text="Tax (10%):" />
+
+        <View
+            android:id="@+id/order_details_line"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@+id/order_details_txt_tax"
+            android:layout_marginTop="3dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/order_details_txt_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_details_line"
+            android:layout_marginTop="3dp"
+            android:text="Total Amount :"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/order_details_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:text="\u20B9100" />
+
+        <TextView
+            android:id="@+id/order_details_delivery_charges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_details_total_price"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="10dp"
+            android:text="\u20B940" />
+
+        <TextView
+            android:id="@+id/order_details_tax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_details_delivery_charges"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="10dp"
+            android:text="\u20B940" />
+
+        <TextView
+            android:id="@+id/order_details_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_details_line"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="10dp"
+            android:text="\u20B9100"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
