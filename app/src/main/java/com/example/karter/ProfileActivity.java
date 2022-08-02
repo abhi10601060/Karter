@@ -41,6 +41,12 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(ProfileActivity.this,UpdateProfileActivity.class));
             }
         });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileActivity.this,OrderHistoryActivity.class));
+            }
+        });
 
     }
 
@@ -49,5 +55,6 @@ public class ProfileActivity extends AppCompatActivity {
         logout=findViewById(R.id.logout_profile_RL);
         about=findViewById(R.id.about_profile_RL);
         address=findViewById(R.id.address_profile_RL);
+        history=findViewById(R.id.history_profile_RL);
     }
 }

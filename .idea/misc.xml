@@ -49,6 +49,7 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_main2.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_order_history.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_search.xml" value="0.24615384615384617" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/activity_signup.xml" value="0.25" />
@@ -63,10 +64,11 @@
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/details_grocery_item_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/fragment_all_products.xml" value="0.24615384615384617" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/fragment_cart.xml" value="0.25" />
-        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/lgrocery_item_layout.xml" value="0.6434316353887399" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/lgrocery_item_layout.xml" value="0.4" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/liscences_dialogue_layout.xml" value="0.22119815668202766" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/navigation_header_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/order_successful_fragment_layout.xml" value="0.25" />
+        <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/orders_layout.xml" value="0.264" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/payment_fragment_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/review_dialogue_layout.xml" value="0.25" />
         <entry key="..\:/ANDROID DEVELOPEMENT/Karter/app/src/main/res/layout/review_layout.xml" value="0.25" />
