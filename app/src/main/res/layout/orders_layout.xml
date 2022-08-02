@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="20dp"
+    app:cardCornerRadius="15dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/desc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description : Here is DESC"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jan 24 ,2020 | 20.45 "
+            android:layout_below="@+id/desc_text"
+            android:textStyle="bold"
+            android:id="@+id/orders_txt_date"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_chevron_right_24"
+            android:layout_alignParentEnd="true"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/orders_txt_date"
+            android:layout_margin="10dp"
+            android:id="@+id/img_LL">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/orders_img_1"
+             />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/orders_img_2"
+                android:layout_marginLeft="5dp"
+
+                />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/orders_img_3"
+                android:layout_marginLeft="5dp"
+         />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/orders_img_4"
+                android:layout_marginLeft="5dp"
+             />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/orders_img_5"
+                android:layout_marginLeft="5dp"
+              />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/number_RL"
+                android:background="@drawable/custom_edt_bar"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    android:id="@+id/orders_rem_count_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="+0"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/orders_txt_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_LL"
+            android:text="Products :"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/orders_txt_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_LL"
+            android:layout_centerHorizontal="true"
+            android:text="Total Price :"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/orders_txt_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_LL"
+            android:text="Paid Via :"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+           />
+
+        <TextView
+            android:id="@+id/orders_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orders_txt_products"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:text="15 items"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/orders_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orders_txt_products"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:text="\u20B9 3000.00"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orders_txt_products"
+            android:text="cash on Delivery"
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:id="@+id/orders_payment_method"/>
+
+
+
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>
