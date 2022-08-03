@@ -71,21 +71,18 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/imageView2"
+                <com.denzcoskun.imageslider.ImageSlider
                     android:layout_width="340dp"
-                    android:layout_height="174dp"
-
-                    android:layout_marginTop="4dp"
-
-                    android:background="@drawable/orange_banner"
-                    android:elevation="10dp"
-                    android:src="@mipmap/banner_image"
-                    app:circularflow_radiusInDP="10"
+                    android:layout_height="175dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.492"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:iss_delay="0"
+                    app:iss_period="2500"
+                    android:id="@+id/advertisements"
+                    app:iss_auto_cycle="true"
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

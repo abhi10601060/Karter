@@ -17,18 +17,24 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class FragmentAllProducts extends Fragment {
 
@@ -43,6 +49,7 @@ public class FragmentAllProducts extends Fragment {
     private RecyclerView new_items_Rv;
     private BottomNavigationView bottomNavigationView;
     private TextView see_all;
+    private ImageSlider ads;
 
 
     @Nullable
@@ -64,8 +71,12 @@ public class FragmentAllProducts extends Fragment {
 
         handleSeeAll();
 
+        handleAds();
+
         return view;
     }
+
+
 
     @Override
     public void onResume() {
@@ -84,6 +95,8 @@ public class FragmentAllProducts extends Fragment {
         search_bar=view.findViewById(R.id.search_bar);
 
         see_all=view.findViewById(R.id.all_product_see_all);
+
+        ads = view.findViewById(R.id.advertisements);
 
     }
     private  void  initRecViews(){
@@ -204,6 +217,21 @@ public class FragmentAllProducts extends Fragment {
                 Intent intent = new Intent(getActivity(),SearchActivity.class);
                 intent.putExtra("category","all");
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void handleAds() {
+        db.collection("Ads").document("images").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                List<String> images = (List<String>) documentSnapshot.get("url");
+                ArrayList<SlideModel> sliders = new ArrayList<>();
+
+                for(String url : images){
+                    sliders.add(new SlideModel(url, ScaleTypes.FIT));
+                }
+                ads.setImageList(sliders);
             }
         });
     }
